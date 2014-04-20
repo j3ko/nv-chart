@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head lang="en">
+		<style>
+			.chartStyle {
+				height: 800px;
+				width: 50%;
+			}
+		</style>
+        <meta charset="utf-8">
+        <title>ng-d3 examples</title>  
+        <link rel="stylesheet" type="text/css" href="../lib/nv.d3.css" />
+        <script type="text/javascript" src="../lib/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="../lib/angular.js"></script>
+        <script type="text/javascript" src="../lib/d3.js"></script>
+        <script type="text/javascript" src="../lib/nv.d3.js"></script>
+		<script type="text/javascript" src="../build/ng-d3.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div class="chartStyle" ng-d3="chartOptions"></div>
+    </body>
+	<script >
+		var app = angular.module('myApp', ['ngD3']);
+		app.controller('MyCtrl', function($scope) {    
+			
+			var data = function() {
+				  var sin = [],
+					  cos = [];
+
+				  for (var i = 0; i < 100; i++) {
+					sin.push({x: i, y: Math.sin(i/10)});
+					cos.push({x: i, y: .5 * Math.cos(i/10)});
+				  }
+
+				  return [
+					{
+					  values: sin,
+					  key: 'Sine Wave',
+					  color: '#ff7f0e'
+					},
+					{
+					  values: cos,
+					  key: 'Cosine Wave',
+					  color: '#2ca02c',
+					}
+				  ];
+				}
+
+			$scope.myData = data();	
+			
+			$scope.chartOptions = {
+				chartType: 'lineChart',
+				data: 'myData',
+				useInteractiveGuideline: true,
+				showXAxis: true,
+				xAxisLabel: 'Time (ms)',
+				xAxisTickFormat: ',r',
+				showYAxis: true,
+				yAxisLabel: 'Voltage (v)',
+				yAxisTickFormat: '.02f',
+				transitionDuration: 500
+			}
+		});		
+	</script>	
+</html>
