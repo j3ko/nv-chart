@@ -6,7 +6,7 @@ AngularJS D3.js Charting using NVD3.js
 
 Line chart: http://plnkr.co/edit/otddjvR00Pn5d3j2szpP?p=preview
 
-<!-- Line plus bar with focus chart: plunker link -->
+Line plus bar with focus chart: http://plnkr.co/edit/KHjItVXPhkBDbPqXPBVr?p=preview
 
 
 ## Getting Started
