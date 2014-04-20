@@ -1,8 +1,8 @@
 /***********************************************
-* ng-grid JavaScript Library
+* ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/20/2014 00:31
+* Compiled At: 04/20/2014 01:49
 ***********************************************/
 (function(window, $) {
 'use strict';

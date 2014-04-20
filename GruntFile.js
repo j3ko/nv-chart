@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 banner: '/***********************************************\n' +
-                    '* ng-grid JavaScript Library\n' +
+                    '* ng-d3 JavaScript Library\n' +
 					'* Author: Jeffrey Ko\n' +
                     '* License: MIT (http://www.opensource.org/licenses/mit-license.php)\n' +
                     '* Compiled At: <%= grunt.template.today("mm/dd/yyyy HH:MM") %>\n' +
