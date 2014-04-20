@@ -11,7 +11,7 @@ Line plus bar with focus chart: plunker link
 
 ## Getting Started
 
-** Dependencies: **
+**Dependencies:**
 
 ng-d3 requires the following javascript libraries:
 
@@ -19,7 +19,7 @@ jQuery
 D3
 NVD3
 
-** Basic Usage: **
+**Basic Usage:**
 
 ```
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -49,7 +49,7 @@ NVD3
 
 ## Documentation
 
-** Chart Options: **
+**Chart Options:**
 
 | Option | Description |
 | ------ | ----------- |
