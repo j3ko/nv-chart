@@ -1,12 +1,11 @@
 # ng-d3
 
-AngularJS D3 Charting using NVD3
+AngularJS D3.js Charting using NVD3
 
 ## Examples
 
 Line chart: plunker link
 Line plus bar with focus chart: plunker link
-
 
 
 ## Getting Started
@@ -15,9 +14,19 @@ Line plus bar with focus chart: plunker link
 
 ng-d3 requires the following javascript libraries:
 
-jQuery
-D3
-NVD3
+jQuery (http://jquery.com/)
+```html
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+```
+D3.js (http://d3js.org/)
+```html
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
+```
+NVD3.js (http://nvd3.org/)
+```html
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" />
+```
 
 **Basic Usage:**
 
@@ -26,7 +35,7 @@ NVD3
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
-<script type="text/javascript" src="ng-d3.js"></script>
+<script type="text/javascript" src="http://rawgit.com/j3ko/ng-d3/blob/master/build/ng-d3.min.js"></script>
 <script>
     angular.module('myApp',['ngD3']);
 
