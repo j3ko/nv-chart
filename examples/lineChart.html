@@ -2,10 +2,9 @@
 <html ng-app="myApp">
     <head lang="en">
 		<style>
-			.chartStyle {
-				height: 800px;
-				width: 50%;
-			}
+            .chartStyles {
+                height: 500px;
+            }
 		</style>
         <meta charset="utf-8">
         <title>ng-d3 examples</title>  
@@ -17,7 +16,7 @@
 		<script type="text/javascript" src="../build/ng-d3.js"></script>
     </head>
     <body ng-controller="MyCtrl">
-        <div class="chartStyle" ng-d3="chartOptions"></div>
+        <div class="chartStyles" ng-d3="chartOptions"></div>
     </body>
 	<script >
 		var app = angular.module('myApp', ['ngD3']);
@@ -48,18 +47,18 @@
 
 			$scope.myData = data();	
 			
-			$scope.chartOptions = {
-				chartType: 'lineChart',
-				data: 'myData',
-				useInteractiveGuideline: true,
-				showXAxis: true,
-				xAxisLabel: 'Time (ms)',
-				xAxisTickFormat: ',r',
-				showYAxis: true,
-				yAxisLabel: 'Voltage (v)',
-				yAxisTickFormat: '.02f',
-				transitionDuration: 500
-			}
-		});		
+            $scope.chartOptions = {
+                chartType: 'lineChart',
+                data: 'myData',
+                useInteractiveGuideline: true,
+                showXAxis: true,
+                xAxisLabel: 'Time (ms)',
+                xAxisTickFormat: ',r',
+                showYAxis: true,
+                yAxisLabel: 'Voltage (v)',
+                yAxisTickFormat: '.02f',
+                transitionDuration: 500
+            }
+        });		
 	</script>	
 </html>
