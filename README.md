@@ -62,7 +62,7 @@ NVD3.js (http://nvd3.org/)
 **Chart Options:**
 
 | Option | Description | Default |
-| ------ | ----------- |
+| ------ | ----------- | ------- |
 | chartType | required string. One of any available NVD3 models (ie. "lineChart", "discreteBarChart", "scatterChart", etc.) | none |
 | data | required string. Name of a scope variable containing the data series | none | 
 | color | an array of hex color codes ie. `["#fff","#000","#333"]` | none|
