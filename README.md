@@ -59,10 +59,10 @@ NVD3.js (http://nvd3.org/)
 
 ## Documentation
 
-**Chart Options:**
+**General Chart Options:**
 
 | Option | Description | Default |
-| ------ | ----------- |
+| ------ | ----------- | ------- |
 | chartType | required string. One of any available NVD3 models (ie. "lineChart", "discreteBarChart", "scatterChart", etc.) | none |
 | data | required string. Name of a scope variable containing the data series | none | 
 | color | an array of hex color codes ie. `["#fff","#000","#333"]` | none|
@@ -74,6 +74,7 @@ NVD3.js (http://nvd3.org/)
 | x2AxisLabel | sets the label of the x2-axis | none |
 | x2AxisTickFormat | sets the x2-axis tick format to the specified D3 format string or function | none | 
 | showYAxis | displays the y-axis if true | true |
+| yValue | sets the y-accessor to the specified constant or function of the form `function(d, i)` | none |
 | yAxisLabel | sets the label of the y-axis | none |
 | yAxisTickFormat | sets the y-axis tick format to the specified D3 format string or function | none | 
 | y1AxisLabel | sets the label of the y1-axis | none |
@@ -89,6 +90,16 @@ NVD3.js (http://nvd3.org/)
 | staggerLabels | staggers the labels for readability if true | false |
 | useInteractiveGuideline | diplays an interactive guideline on the graph if true | true |
 | transitionDuration | a number indicating the speed of transitions | 0 |
+
+**Pie Chart Specific Options:**
+
+| Option | Description | Default |
+| ------ | ----------- | ------- |
+| showLabels | displays labels if true | true |
+| labelThreshold | configure the minimum slice size for labels to show up | 0.5 |
+| labelType | configure what type of data to show in the label.  One of: "key", "value" or "percent" | "key" |
+| donut | sets the chart to donut mode | false |
+| donutRatio | configure the size of the donut hole | 0 |
 
 <!-- **Data Options:** -->
 

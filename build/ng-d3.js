@@ -2,7 +2,7 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/20/2014 16:12
+* Compiled At: 04/20/2014 22:14
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -23,6 +23,7 @@ var ngChart = function($scope, options, $element) {
         x2AxisLabel: null,
         x2AxisTickFormat: null,
         showYAxis: true,
+        yValue: null,
         yAxisLabel: null,
         yAxisTickFormat: null,
         y1AxisLabel: null,
@@ -33,6 +34,14 @@ var ngChart = function($scope, options, $element) {
         y3AxisTickFormat: null,
         y4AxisLabel: null,
         y4AxisTickFormat: null,
+        
+        // pie chart
+        showLabels: true,
+        labelThreshold: 0.5,
+        labelType: 'key', // key, value or percent
+        donut: false,
+        donutRatio: 0,
+        
         tooltips: true,
         showValues: false,
         staggerLabels: false,
@@ -54,62 +63,46 @@ var ngChart = function($scope, options, $element) {
         self.model = nv.models[type];
     }
     
-    // todo: refactor this
     self.configAxis = function (model) {
-        // x value function
+
         if (typeof self.config.xValue === 'function')
             model.x(self.config.xValue);
-    
-        // x axis labels
-        if (model.xAxis && model.xAxis.axisLabel && typeof self.config.xAxisLabel === 'string')
-            model.xAxis.axisLabel(self.config.xAxisLabel);
-        if (model.x2Axis && model.x2Axis.axisLabel && typeof self.config.x2AxisLabel === 'string')
-            model.x2Axis.axisLabel(self.config.x2AxisLabel);
+        if (typeof self.config.yValue === 'function')
+            model.y(self.config.yValue);
+
+            // x axis labels
+        self.setAxisLabel(model, 'xAxis', self.config.xAxisLabel);
+        self.setAxisLabel(model, 'x2Axis', self.config.x2AxisLabel);
             
         // y axis labels
-        if (model.yAxis && model.yAxis.axisLabel && typeof self.config.yAxisLabel === 'string')
-            model.yAxis.axisLabel(self.config.yAxisLabel);
-        if (model.y1Axis && model.y1Axis.axisLabel && typeof self.config.y1AxisLabel === 'string')
-            model.y1Axis.axisLabel(self.config.y1AxisLabel);
-        if (model.y2Axis && model.y2Axis.axisLabel && typeof self.config.y2AxisLabel === 'string')
-            model.y2Axis.axisLabel(self.config.y2AxisLabel);
-        if (model.y3Axis && model.y3Axis.axisLabel && typeof self.config.y3AxisLabel === 'string')
-            model.y3Axis.axisLabel(self.config.y3AxisLabel);
-        if (model.y4Axis && model.y4Axis.axisLabel && typeof self.config.y4AxisLabel === 'string')
-            model.y4Axis.axisLabel(self.config.y4AxisLabel);
+        self.setAxisLabel(model, 'yAxis', self.config.yAxisLabel);
+        self.setAxisLabel(model, 'y1Axis', self.config.yAxisLabel);
+        self.setAxisLabel(model, 'y2Axis', self.config.yAxisLabel);
+        self.setAxisLabel(model, 'y3Axis', self.config.yAxisLabel);
+        self.setAxisLabel(model, 'y4Axis', self.config.yAxisLabel);
         
         // x axis tick formats
-        if (model.xAxis && model.xAxis.tickFormat && typeof self.config.xAxisTickFormat === 'string')
-            model.xAxis.tickFormat(d3.format(self.config.xAxisTickFormat));
-        else if (model.xAxis && model.xAxis.tickFormat && typeof self.config.xAxisTickFormat === 'function')
-            model.xAxis.tickFormat(self.config.xAxisTickFormat);
-        if (model.x2Axis && model.x2Axis.tickFormat && typeof self.config.x2AxisTickFormat === 'string')
-            model.x2Axis.tickFormat(d3.format(self.config.x2AxisTickFormat));
-        else if (model.x2Axis && model.x2Axis.tickFormat && typeof self.config.x2AxisTickFormat === 'function')
-            model.x2Axis.tickFormat(self.config.x2AxisTickFormat);
+        self.setTickFormat(model, 'xAxis', self.config.xAxisTickFormat);
+        self.setTickFormat(model, 'x2Axis', self.config.x2AxisTickFormat);
         
         // y axis tick formats
-        if (model.yAxis && model.yAxis.tickFormat && typeof self.config.yAxisTickFormat === 'string')
-            model.yAxis.tickFormat(d3.format(self.config.yAxisTickFormat));
-        else if (model.yAxis && model.yAxis.tickFormat && typeof self.config.yAxisTickFormat === 'function')
-            model.yAxis.tickFormat(self.config.yAxisTickFormat);
-        if (model.y1Axis && model.y1Axis.tickFormat && typeof self.config.y1AxisTickFormat === 'string')
-            model.y1Axis.tickFormat(d3.format(self.config.y1AxisTickFormat));
-        else if (model.y1Axis && model.y1Axis.tickFormat && typeof self.config.y1AxisTickFormat === 'function')
-            model.y1Axis.tickFormat(self.config.y1AxisTickFormat);
-        if (model.y2Axis && model.y2Axis.tickFormat && typeof self.config.y2AxisTickFormat === 'string')
-            model.y2Axis.tickFormat(d3.format(self.config.y2AxisTickFormat));
-        else if (model.y2Axis && model.y2Axis.tickFormat && typeof self.config.y2AxisTickFormat === 'function')
-            model.y2Axis.tickFormat(self.config.y2AxisTickFormat);
-        if (model.y3Axis && model.y3Axis.tickFormat && typeof self.config.y3AxisTickFormat === 'string')
-            model.y3Axis.tickFormat(d3.format(self.config.y3AxisTickFormat));
-        else if (model.y3Axis && model.y3Axis.tickFormat && typeof self.config.y3AxisTickFormat === 'function')
-            model.y3Axis.tickFormat(self.config.y3AxisTickFormat);
-        if (model.y4Axis && model.y4Axis.tickFormat && typeof self.config.y4AxisTickFormat === 'string')
-            model.y4Axis.tickFormat(d3.format(self.config.y4AxisTickFormat));
-        else if (model.y4Axis && model.y4Axis.tickFormat && typeof self.config.y4AxisTickFormat === 'function')
-            model.y4Axis.tickFormat(self.config.y4AxisTickFormat);
-         
+        self.setTickFormat(model, 'yAxis', self.config.yAxisTickFormat);
+        self.setTickFormat(model, 'y1Axis', self.config.y1AxisTickFormat);
+        self.setTickFormat(model, 'y2Axis', self.config.y2AxisTickFormat);
+        self.setTickFormat(model, 'y3Axis', self.config.y3AxisTickFormat);
+        self.setTickFormat(model, 'y4Axis', self.config.y4AxisTickFormat);         
+    };
+    
+    self.setAxisLabel = function (model, axis, label) {
+        if (model[axis] && model[axis].axisLabel && typeof label === 'string')
+            model[axis].axisLabel(label);
+    };
+    
+    self.setTickFormat = function (model, axis, tickFormat) {
+        if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
+            model[axis].tickFormat(d3.format(tickFormat));
+        else if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
+            model[axis].tickFormat(tickFormat);
     };
     
     self.render = function () {
@@ -131,6 +124,16 @@ var ngChart = function($scope, options, $element) {
             model.tooltips(!!self.config.tooltips);
         if (model.showValues)
             model.showValues(!!self.config.showValues);
+        if (model.showLabels)
+            model.showLabels(!!self.config.showLabels);
+        if (model.labelThreshold)
+            model.labelThreshold(self.config.labelThreshold);
+        if (model.labelType)
+            model.labelType(self.config.labelType);
+        if (model.donut)
+            model.donut(!!self.config.donut);
+        if (model.donutRatio)
+            model.donutRatio(self.config.donutRatio);
         
         self.configAxis(model);
             
