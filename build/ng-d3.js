@@ -2,7 +2,7 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/21/2014 20:32
+* Compiled At: 04/21/2014 23:30
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -111,7 +111,6 @@ var ngChart = function($scope, options, $element) {
         
         self.setChartType(self.config.chartType);
         
-        // var svg = $('<svg></svg>');
         var model = self.model();
         
         if (model.margin)
@@ -140,7 +139,6 @@ var ngChart = function($scope, options, $element) {
         self.configAxis(model);
             
         $element.empty();
-
         var svg = d3.select($element[0])
         .append('svg')
         .datum(self.data);
@@ -149,10 +147,9 @@ var ngChart = function($scope, options, $element) {
             svg = svg.transition().duration(self.config.transitionDuration);
         
         svg.call(model);
-        
+
+        $scope.refresh = model.update;
         nv.utils.windowResize(model.update);
-        
-        return;
     };
         
 };
@@ -162,31 +159,34 @@ ngD3Directives
         scope: true,
         compile: function() {
             return {
-                pre: function($scope, iElement, iAttrs) {
+                post: function($scope, iElement, iAttrs) {
                     var scope = $scope.$parent;
                     var $element = $(iElement);
                     var options = scope.$eval(iAttrs.ngD3);
                     var chart = new ngChart($scope, options, $element);
 
-                    // probably not right to do this
-                    if (typeof iAttrs.ngD3 === 'string') {
-                        var chartTypeWatcher = function (e) {
-                            chart.updateConfig($scope.$eval(iAttrs.ngD3));
-                            chart.render();
-                        };
-                        scope.$watch(iAttrs.ngD3, chartTypeWatcher, true);
-                    }
+                    if (options) {
+                        options.$chartScope = $scope;
 
-                    if (options && typeof options.data === 'string') {
-                        var dataWatcher = function (e) {
-                            chart.data = $.extend([], e);
+                        var chartTypeWatcher = function (oldVal, newVal) {
+                            if (oldVal === newVal) return;
+                            chart.updateConfig({ chartType: scope.$eval(iAttrs.ngD3 + '.chartType') });
                             chart.render();
-                            //iElement.empty().append(chart.render());
                         };
-                        scope.$watch(options.data, dataWatcher);
-                        scope.$watch(options.data + '.length', function() {
-                            dataWatcher($scope.$eval(options.data));
-                        });
+                        scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher);
+
+                        // setup data watcher
+                        if (typeof options.data === 'string') {
+                            var dataWatcher = function (e) {
+                                chart.data = $.extend([], e);
+                                chart.render();
+                                //iElement.empty().append(chart.render());
+                            };
+                            scope.$watch(options.data, dataWatcher);
+                            scope.$watch(options.data + '.length', function() {
+                                dataWatcher(scope.$eval(options.data));
+                            });
+                        }
                     }
 
                 }

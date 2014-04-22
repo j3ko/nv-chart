@@ -100,7 +100,6 @@ var ngChart = function($scope, options, $element) {
         
         self.setChartType(self.config.chartType);
         
-        // var svg = $('<svg></svg>');
         var model = self.model();
         
         if (model.margin)
@@ -129,7 +128,6 @@ var ngChart = function($scope, options, $element) {
         self.configAxis(model);
             
         $element.empty();
-
         var svg = d3.select($element[0])
         .append('svg')
         .datum(self.data);
@@ -138,10 +136,9 @@ var ngChart = function($scope, options, $element) {
             svg = svg.transition().duration(self.config.transitionDuration);
         
         svg.call(model);
-        
+
+        $scope.refresh = model.update;
         nv.utils.windowResize(model.update);
-        
-        return;
     };
         
 };
