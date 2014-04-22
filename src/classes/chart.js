@@ -30,10 +30,12 @@ var ngChart = function($scope, options, $element) {
         labelType: 'key', // key, value or percent
         donut: false,
         donutRatio: 0,
-        
+
+        // discrete bar
+        staggerLabels: false,
+
         tooltips: true,
         showValues: false,
-        staggerLabels: false,
         useInteractiveGuideline: false,
         transitionDuration: null
     };
@@ -44,13 +46,13 @@ var ngChart = function($scope, options, $element) {
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
-    }
+    };
     
     self.setChartType = function (type) {
         if (typeof type !== 'string') return;
     
         self.model = nv.models[type];
-    }
+    };
     
     self.configAxis = function (model) {
 
@@ -90,7 +92,7 @@ var ngChart = function($scope, options, $element) {
     self.setTickFormat = function (model, axis, tickFormat) {
         if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
             model[axis].tickFormat(d3.format(tickFormat));
-        else if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
+        else if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'function')
             model[axis].tickFormat(tickFormat);
     };
     
@@ -103,7 +105,7 @@ var ngChart = function($scope, options, $element) {
         
         if (model.margin)
             model.margin(self.config.margin);
-        if (model.color && typeof $.isArray(self.config.color))
+        if (model.color && typeof $.isArray(self.config.color) && self.config.color.length)
             model.color(self.config.color);
         if (model.useInteractiveGuideline)
             model.useInteractiveGuideline(!!self.config.useInteractiveGuideline);
@@ -135,11 +137,11 @@ var ngChart = function($scope, options, $element) {
         if (typeof self.config.transitionDuration === 'number')
             svg = svg.transition().duration(self.config.transitionDuration);
         
-        svg.call(model)
+        svg.call(model);
         
         nv.utils.windowResize(model.update);
         
         return;
     };
         
-}
+};

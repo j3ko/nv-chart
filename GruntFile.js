@@ -6,11 +6,30 @@ module.exports = function (grunt) {
             'src/classes/*.js',
             'src/directives/*.js'
         ],
+        testFiles: [
+            'test/*.js'
+        ],
+        buildFiles: [
+            'build/<%= pkg.name %>.js'
+        ],
+        vendorFiles: [
+            'lib/jquery-1.11.0.js',
+            'lib/angular.js',
+            'lib/angular-mocks.js',
+            'lib/d3.js',
+            'lib/nv.d3.js'
+        ],
         watch: {
             debug: {
-                files: ['<%= srcFiles %>'],
-                tasks: ['debug']
+                files: ['<%= srcFiles %>', '<%= testFiles %>'],
+                tasks: ['concat:debug', 'jasmine', 'jshint']
             }
+        },
+        jshint: {
+            options: {
+                newcap: false
+            },
+            all: ['build/<%= pkg.name %>.js']
         },
         concat: {
             options: {
@@ -50,11 +69,11 @@ module.exports = function (grunt) {
             }
         },
         jasmine: {
-            customTemplate: {
-                src: 'src/<%= pkg.name %>.js',
+            all: {
+                src: ['<%= vendorFiles %>', '<%= buildFiles %>'],
                 options: {
-                    specs: 'spec/_specs.js',
-                    helpers: 'spec/_helpers.js'
+                    specs: 'test/*Spec.js',
+                    helpers: 'test/*Helpers.js'
                 }
             }
         }
@@ -65,8 +84,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    
-    
-    grunt.registerTask('debug', ['concat:debug', 'watch:debug']);
-    grunt.registerTask('build', ['concat:prod', 'uglify']);
+
+
+    grunt.registerTask('test', ['concat:debug', 'jasmine', 'jshint']);
+    grunt.registerTask('debug', ['watch:debug']);
+    grunt.registerTask('build', ['concat:prod', 'jasmine', 'jshint', 'uglify']);
 };

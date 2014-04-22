@@ -2,7 +2,7 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/20/2014 22:14
+* Compiled At: 04/21/2014 20:32
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -41,10 +41,12 @@ var ngChart = function($scope, options, $element) {
         labelType: 'key', // key, value or percent
         donut: false,
         donutRatio: 0,
-        
+
+        // discrete bar
+        staggerLabels: false,
+
         tooltips: true,
         showValues: false,
-        staggerLabels: false,
         useInteractiveGuideline: false,
         transitionDuration: null
     };
@@ -55,13 +57,13 @@ var ngChart = function($scope, options, $element) {
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
-    }
+    };
     
     self.setChartType = function (type) {
         if (typeof type !== 'string') return;
     
         self.model = nv.models[type];
-    }
+    };
     
     self.configAxis = function (model) {
 
@@ -101,7 +103,7 @@ var ngChart = function($scope, options, $element) {
     self.setTickFormat = function (model, axis, tickFormat) {
         if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
             model[axis].tickFormat(d3.format(tickFormat));
-        else if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'string')
+        else if (model[axis] && model[axis].tickFormat && typeof tickFormat === 'function')
             model[axis].tickFormat(tickFormat);
     };
     
@@ -114,7 +116,7 @@ var ngChart = function($scope, options, $element) {
         
         if (model.margin)
             model.margin(self.config.margin);
-        if (model.color && typeof $.isArray(self.config.color))
+        if (model.color && typeof $.isArray(self.config.color) && self.config.color.length)
             model.color(self.config.color);
         if (model.useInteractiveGuideline)
             model.useInteractiveGuideline(!!self.config.useInteractiveGuideline);
@@ -146,14 +148,14 @@ var ngChart = function($scope, options, $element) {
         if (typeof self.config.transitionDuration === 'number')
             svg = svg.transition().duration(self.config.transitionDuration);
         
-        svg.call(model)
+        svg.call(model);
         
         nv.utils.windowResize(model.update);
         
         return;
     };
         
-}
+};
 ngD3Directives
 .directive('ngD3', ['$compile', function($compile) {
     var ngD3Directive = {
@@ -161,7 +163,7 @@ ngD3Directives
         compile: function() {
             return {
                 pre: function($scope, iElement, iAttrs) {
-                    var scope = $scope.$parent
+                    var scope = $scope.$parent;
                     var $element = $(iElement);
                     var options = scope.$eval(iAttrs.ngD3);
                     var chart = new ngChart($scope, options, $element);
@@ -169,7 +171,7 @@ ngD3Directives
                     // probably not right to do this
                     if (typeof iAttrs.ngD3 === 'string') {
                         var chartTypeWatcher = function (e) {
-                            chart.updateConfig($scope.$eval(iAttrs.ngD3))
+                            chart.updateConfig($scope.$eval(iAttrs.ngD3));
                             chart.render();
                         };
                         scope.$watch(iAttrs.ngD3, chartTypeWatcher, true);
@@ -177,9 +179,8 @@ ngD3Directives
 
                     if (options && typeof options.data === 'string') {
                         var dataWatcher = function (e) {
-                        // make a temporary copy of the data
-                        chart.data = $.extend([], e);
-                        chart.render();
+                            chart.data = $.extend([], e);
+                            chart.render();
                             //iElement.empty().append(chart.render());
                         };
                         scope.$watch(options.data, dataWatcher);
@@ -188,12 +189,12 @@ ngD3Directives
                         });
                     }
 
-
                 }
             };
+
         }
     };
-	
+
     return ngD3Directive;
 }]);
 }(window, jQuery));
