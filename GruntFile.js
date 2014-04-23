@@ -70,8 +70,9 @@ module.exports = function (grunt) {
         },
         jasmine: {
             all: {
-                src: ['<%= vendorFiles %>', '<%= buildFiles %>'],
+                src: ['<%= buildFiles %>'],
                 options: {
+                    vendor: ['<%= vendorFiles %>'],
                     specs: 'test/*Spec.js',
                     helpers: 'test/*Helpers.js'
                 }

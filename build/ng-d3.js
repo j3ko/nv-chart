@@ -2,28 +2,30 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/21/2014 23:30
+* Compiled At: 04/22/2014 23:07
 ***********************************************/
 (function(window, $) {
 'use strict';
 var ngD3Directives = angular.module('ngD3.directives', []);
 
 angular.module('ngD3', ['ngD3.directives']);
-var ngChart = function($scope, options, $element) {
+var ngChart = function($scope, $element, options) {
 
     var self = this, defaults = {
-        chartType: 'line',
+        chartType: null,
         data: [],
         color: [],
         margin: {},
         showXAxis: true,
         xValue: null,
+        xShowMaxMin: true,
         xAxisLabel: null,
         xAxisTickFormat: null,
         x2AxisLabel: null,
         x2AxisTickFormat: null,
         showYAxis: true,
         yValue: null,
+        yShowMaxMin: true,
         yAxisLabel: null,
         yAxisTickFormat: null,
         y1AxisLabel: null,
@@ -57,6 +59,10 @@ var ngChart = function($scope, options, $element) {
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
+
+        if (typeof self.config.data === "object") {
+            self.data = self.config.data;
+        }
     };
     
     self.setChartType = function (type) {
@@ -72,7 +78,12 @@ var ngChart = function($scope, options, $element) {
         if (typeof self.config.yValue === 'function')
             model.y(self.config.yValue);
 
-            // x axis labels
+        if (model.xAxis && model.xAxis.showMaxMin)
+            model.xAxis.showMaxMin(!!self.config.xShowMaxMin);
+        if (model.yAxis && model.yAxis.showMaxMin)
+            model.yAxis.showMaxMin(!!self.config.yShowMaxMin);
+
+        // x axis labels
         self.setAxisLabel(model, 'xAxis', self.config.xAxisLabel);
         self.setAxisLabel(model, 'x2Axis', self.config.x2AxisLabel);
             
@@ -110,7 +121,7 @@ var ngChart = function($scope, options, $element) {
     self.render = function () {
         
         self.setChartType(self.config.chartType);
-        
+        if (!self.model) return;
         var model = self.model();
         
         if (model.margin)
@@ -148,7 +159,6 @@ var ngChart = function($scope, options, $element) {
         
         svg.call(model);
 
-        $scope.refresh = model.update;
         nv.utils.windowResize(model.update);
     };
         
@@ -162,32 +172,49 @@ ngD3Directives
                 post: function($scope, iElement, iAttrs) {
                     var scope = $scope.$parent;
                     var $element = $(iElement);
-                    var options = scope.$eval(iAttrs.ngD3);
-                    var chart = new ngChart($scope, options, $element);
+                    var chart = new ngChart($scope, $element);
+                    var watches = [];
 
-                    if (options) {
+                    $scope.$watch(iAttrs.ngD3, function(value) {
+                        var options = scope.$eval(iAttrs.ngD3);
+                        if (options) bindOptions(options);
+                        else unbindOptions();
+                    });
+
+                    var bindOptions = function(options) {
                         options.$chartScope = $scope;
-
-                        var chartTypeWatcher = function (oldVal, newVal) {
-                            if (oldVal === newVal) return;
-                            chart.updateConfig({ chartType: scope.$eval(iAttrs.ngD3 + '.chartType') });
+                        options.$chartScope.refresh = function () {
+                            chart.updateConfig(options);
                             chart.render();
                         };
-                        scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher);
+
+                        var chartTypeWatcher = function (newVal) {
+                            if (chart.config.chartType === newVal) return;
+                            options.$chartScope.refresh();
+                        };
+                        watches.push(scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher));
 
                         // setup data watcher
                         if (typeof options.data === 'string') {
                             var dataWatcher = function (e) {
-                                chart.data = $.extend([], e);
+                                chart.data = e ? $.extend([], e) : [];
                                 chart.render();
                                 //iElement.empty().append(chart.render());
                             };
-                            scope.$watch(options.data, dataWatcher);
-                            scope.$watch(options.data + '.length', function() {
+                            watches.push(scope.$watch(options.data, dataWatcher));
+                            watches.push(scope.$watch(options.data + '.length', function() {
                                 dataWatcher(scope.$eval(options.data));
-                            });
+                            }));
                         }
-                    }
+                    };
+
+                    var unbindOptions = function() {
+                        angular.forEach(watches, function(e) { e(); });
+                        watches = [];
+                        chart.data = [];
+                        chart.render();
+                    };
+
 
                 }
             };

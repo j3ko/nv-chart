@@ -7,32 +7,49 @@ ngD3Directives
                 post: function($scope, iElement, iAttrs) {
                     var scope = $scope.$parent;
                     var $element = $(iElement);
-                    var options = scope.$eval(iAttrs.ngD3);
-                    var chart = new ngChart($scope, options, $element);
+                    var chart = new ngChart($scope, $element);
+                    var watches = [];
 
-                    if (options) {
+                    $scope.$watch(iAttrs.ngD3, function(value) {
+                        var options = scope.$eval(iAttrs.ngD3);
+                        if (options) bindOptions(options);
+                        else unbindOptions();
+                    });
+
+                    var bindOptions = function(options) {
                         options.$chartScope = $scope;
-
-                        var chartTypeWatcher = function (oldVal, newVal) {
-                            if (oldVal === newVal) return;
-                            chart.updateConfig({ chartType: scope.$eval(iAttrs.ngD3 + '.chartType') });
+                        options.$chartScope.refresh = function () {
+                            chart.updateConfig(options);
                             chart.render();
                         };
-                        scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher);
+
+                        var chartTypeWatcher = function (newVal) {
+                            if (chart.config.chartType === newVal) return;
+                            options.$chartScope.refresh();
+                        };
+                        watches.push(scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher));
 
                         // setup data watcher
                         if (typeof options.data === 'string') {
                             var dataWatcher = function (e) {
-                                chart.data = $.extend([], e);
+                                chart.data = e ? $.extend([], e) : [];
                                 chart.render();
                                 //iElement.empty().append(chart.render());
                             };
-                            scope.$watch(options.data, dataWatcher);
-                            scope.$watch(options.data + '.length', function() {
+                            watches.push(scope.$watch(options.data, dataWatcher));
+                            watches.push(scope.$watch(options.data + '.length', function() {
                                 dataWatcher(scope.$eval(options.data));
-                            });
+                            }));
                         }
-                    }
+                    };
+
+                    var unbindOptions = function() {
+                        angular.forEach(watches, function(e) { e(); });
+                        watches = [];
+                        chart.data = [];
+                        chart.render();
+                    };
+
 
                 }
             };

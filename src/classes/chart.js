@@ -1,18 +1,20 @@
-var ngChart = function($scope, options, $element) {
+var ngChart = function($scope, $element, options) {
 
     var self = this, defaults = {
-        chartType: 'line',
+        chartType: null,
         data: [],
         color: [],
         margin: {},
         showXAxis: true,
         xValue: null,
+        xShowMaxMin: true,
         xAxisLabel: null,
         xAxisTickFormat: null,
         x2AxisLabel: null,
         x2AxisTickFormat: null,
         showYAxis: true,
         yValue: null,
+        yShowMaxMin: true,
         yAxisLabel: null,
         yAxisTickFormat: null,
         y1AxisLabel: null,
@@ -46,6 +48,10 @@ var ngChart = function($scope, options, $element) {
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
+
+        if (typeof self.config.data === "object") {
+            self.data = self.config.data;
+        }
     };
     
     self.setChartType = function (type) {
@@ -61,7 +67,12 @@ var ngChart = function($scope, options, $element) {
         if (typeof self.config.yValue === 'function')
             model.y(self.config.yValue);
 
-            // x axis labels
+        if (model.xAxis && model.xAxis.showMaxMin)
+            model.xAxis.showMaxMin(!!self.config.xShowMaxMin);
+        if (model.yAxis && model.yAxis.showMaxMin)
+            model.yAxis.showMaxMin(!!self.config.yShowMaxMin);
+
+        // x axis labels
         self.setAxisLabel(model, 'xAxis', self.config.xAxisLabel);
         self.setAxisLabel(model, 'x2Axis', self.config.x2AxisLabel);
             
@@ -99,7 +110,7 @@ var ngChart = function($scope, options, $element) {
     self.render = function () {
         
         self.setChartType(self.config.chartType);
-        
+        if (!self.model) return;
         var model = self.model();
         
         if (model.margin)
@@ -137,7 +148,6 @@ var ngChart = function($scope, options, $element) {
         
         svg.call(model);
 
-        $scope.refresh = model.update;
         nv.utils.windowResize(model.update);
     };
         
