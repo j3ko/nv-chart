@@ -2,13 +2,35 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/26/2014 11:30
+* Compiled At: 04/26/2014 11:49
 ***********************************************/
 (function(window, $) {
 'use strict';
 var ngD3Directives = angular.module('ngD3.directives', []);
 
 angular.module('ngD3', ['ngD3.directives']);
+
+if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+        if (typeof this !== "function") {
+            // closest thing possible to the ECMAScript 5 internal IsCallable function
+            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+        }
+
+        var aArgs = Array.prototype.slice.call(arguments, 1),
+            fToBind = this,
+            fNOP = function () {},
+            fBound = function () {
+                return fToBind.apply(this instanceof fNOP && oThis ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
+            };
+
+        fNOP.prototype = this.prototype;
+        fBound.prototype = new fNOP();
+
+        return fBound;
+    };
+}
+
 var ngChart = function($scope, $element, options) {
 
     var self = this, defaults = {
