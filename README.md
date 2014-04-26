@@ -71,11 +71,13 @@ NVD3.js (http://nvd3.org/)
 | xValue | sets the x-accessor to the specified constant or function of the form `function(d, i)` | none |
 | xAxisLabel | sets the label of the x-axis | none |
 | xAxisTickFormat | sets the x-axis tick format to the specified D3 format string or function | none | 
+| xShowMaxMin | display the max/min values on the x-axis | true |
 | x2AxisLabel | sets the label of the x2-axis | none |
 | x2AxisTickFormat | sets the x2-axis tick format to the specified D3 format string or function | none | 
 | showYAxis | displays the y-axis if true | true |
 | yValue | sets the y-accessor to the specified constant or function of the form `function(d, i)` | none |
 | yAxisLabel | sets the label of the y-axis | none |
+| yShowMaxMin | display the max/min values on the y-axis | true |
 | yAxisTickFormat | sets the y-axis tick format to the specified D3 format string or function | none | 
 | y1AxisLabel | sets the label of the y1-axis | none |
 | y1AxisTickFormat | sets the y1-axis tick format to the specified D3 format string or function | none | 

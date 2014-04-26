@@ -19,10 +19,28 @@ module.exports = function (grunt) {
             'lib/d3.js',
             'lib/nv.d3.js'
         ],
+        karma: {
+            unit: {
+                options: {
+                    configFile: 'test/karma.conf.js',
+                    autoWatch: false,
+                    singleRun: true,
+                    browsers: ['Chrome']
+                }
+            },
+            ci: {
+                options: {
+                    configFile: 'test/karma.conf.js',
+                    autoWatch: false,
+                    singleRun: true,
+                    browsers: ['PhantomJS']
+                }
+            }
+        },
         watch: {
             debug: {
                 files: ['<%= srcFiles %>', '<%= testFiles %>'],
-                tasks: ['concat:debug', 'jasmine', 'jshint']
+                tasks: ['concat:debug', 'jshint']
             }
         },
         jshint: {
@@ -80,6 +98,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -87,7 +106,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
-    grunt.registerTask('test', ['concat:debug', 'jasmine', 'jshint']);
+    grunt.registerTask('test', ['concat:debug', 'karma:ci', 'jshint']);
     grunt.registerTask('debug', ['watch:debug']);
-    grunt.registerTask('build', ['concat:prod', 'jasmine', 'jshint', 'uglify']);
+    grunt.registerTask('build', ['concat:prod', 'karma:unit', 'jshint', 'uglify']);
 };
