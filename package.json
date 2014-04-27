@@ -24,10 +24,9 @@
     "url": "https://github.com/j3ko/ng-d3/issues"
   },
   "homepage": "https://github.com/j3ko/ng-d3",
-  "dependencies": {
+  "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-cli": "^0.1.13",
-    "grunt-jsdoc": "^0.5.4",
     "grunt-karma": "^0.8.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-concat": "^0.4.0",

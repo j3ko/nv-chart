@@ -2,7 +2,7 @@
 * ng-d3 JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/26/2014 11:49
+* Compiled At: 04/26/2014 21:41
 ***********************************************/
 (function(window, $) {
 'use strict';
