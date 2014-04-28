@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         },
         watch: {
             debug: {
-                files: ['<%= srcFiles %>', '<%= testFiles %>'],
+                files: ['<%= srcFiles %>'],
                 tasks: ['concat:debug', 'jshint']
             }
         },
