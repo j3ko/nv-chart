@@ -1,4 +1,4 @@
-# ng-d3 [![Build Status](https://travis-ci.org/j3ko/ng-d3.svg?branch=master)](https://travis-ci.org/j3ko/ng-d3)
+# nv-chart [![Build Status](https://travis-ci.org/j3ko/ng-d3.svg?branch=master)](https://travis-ci.org/j3ko/ng-d3)
 
 AngularJS D3.js charting using NVD3.js
 
@@ -36,9 +36,9 @@ NVD3.js (http://nvd3.org/)
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
-<script type="text/javascript" src="http://rawgit.com/j3ko/ng-d3/master/build/ng-d3.min.js"></script>
+<script type="text/javascript" src="http://rawgit.com/j3ko/ng-d3/master/build/nv-chart.min.js"></script>
 <script>
-    angular.module('myApp',['ngD3']);
+    angular.module('myApp',['nvChart']);
 
 	function MyCtrl($scope) {
 		$scope.chartData = [{
@@ -53,7 +53,7 @@ NVD3.js (http://nvd3.org/)
 </script>
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" /> 
 <body ng-app="myApp" ng-controller="MyCtrl">
-    <div ng-d3="chartOptions"></div>
+    <div nv-chart="chartOptions"></div>
 </body>
 ```
 
@@ -106,4 +106,4 @@ NVD3.js (http://nvd3.org/)
 <!-- **Data Options:** -->
 
 ## License
-ng-d3.js is freely distributable under the terms of the MIT license.
+nv-chart.js is freely distributable under the terms of the MIT license.

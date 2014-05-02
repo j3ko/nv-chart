@@ -20,7 +20,7 @@ module.exports = function(config) {
       'lib/angular-mocks.js',
       'lib/d3.js',
       'lib/nv.d3.js',
-      'build/ng-d3.js',
+      'build/nv-chart.js',
       'test/*Spec.js'
     ],
 

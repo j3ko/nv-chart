@@ -1,14 +1,12 @@
 /***********************************************
-* ng-d3 JavaScript Library
+* nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 04/28/2014 00:19
+* Compiled At: 05/01/2014 22:31
 ***********************************************/
 (function(window, $) {
 'use strict';
-var ngD3Directives = angular.module('ngD3.directives', []);
-
-angular.module('ngD3', ['ngD3.directives']);
+var d3App = angular.module('nvChart', []);
 
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
@@ -31,10 +29,10 @@ if (!Function.prototype.bind) {
     };
 }
 
-var ngChart = function($scope, $element, options) {
+var d3Chart = function($scope, $element, options) {
 
     var self = this, defaults = {
-        // ng-d3 properties
+        // nv-chart properties
         chartType: null,
         data: [],
 
@@ -94,11 +92,18 @@ var ngChart = function($scope, $element, options) {
 
         // discrete bar
         staggerLabels: false,
-        showValues: false
+        showValues: false,
+
+        // scatter
+        showDistX: false,
+        showDistY: false,
+        onlyCircles: false
     };
 
     self.data = [];
-    
+
+    self.models = [];
+
     self.config = $.extend(defaults, options);
 
     self.updateConfig = function (options) {
@@ -107,6 +112,12 @@ var ngChart = function($scope, $element, options) {
         if (typeof self.config.data === "object") {
             self.data = self.config.data;
         }
+    };
+
+    self.updateModels = function() {
+        angular.forEach(self.models, function(e){
+            e.update();
+        });
     };
     
     self.setChartType = function (type) {
@@ -197,7 +208,15 @@ var ngChart = function($scope, $element, options) {
             model.donut(!!self.config.donut);
         if (model.donutRatio)
             model.donutRatio(self.config.donutRatio);
-        
+
+        // scatter
+        if (model.showDistX)
+            model.showDistX(!!self.config.showDistX);
+        if (model.showDistY)
+            model.showDistY(!!self.config.showDistY);
+        if (model.scatter && model.scatter.onlyCircles)
+            model.scatter.onlyCircles(!! self.config.onlyCircles);
+
         self.configAxis(model);
             
         $element.empty();
@@ -210,69 +229,93 @@ var ngChart = function($scope, $element, options) {
         
         svg.call(model);
 
+        self.models.push(model);
+
         nv.utils.windowResize(model.update);
     };
         
 };
-ngD3Directives
-.directive('ngD3', ['$compile', function($compile) {
-    var ngD3Directive = {
+d3App
+.controller('d3Controller', ['$scope', function d3Controller($scope){
+    var ctrl = this;
+
+
+
+
+}]);
+d3App
+.directive('nvChartContainer', [function() {
+
+
+
+}]);
+
+d3App
+.directive('nvChart', [function() {
+    var d3Directive = {
         scope: true,
-        compile: function() {
-            return {
-                post: function($scope, iElement, iAttrs) {
-                    var scope = $scope.$parent;
-                    var $element = $(iElement);
-                    var chart = new ngChart($scope, $element);
-                    var watches = [];
+        link: function($scope, iElement, iAttrs, controller) {
+            var scope = $scope.$parent;
+            var $element = $(iElement);
+            var chart = new d3Chart($scope, $element);
+            var watches = [];
 
-                    $scope.$watch(iAttrs.ngD3, function(value) {
-                        var options = scope.$eval(iAttrs.ngD3);
-                        if (options) bindOptions(options);
-                        else unbindOptions();
-                    });
+            $scope.$watch(iAttrs.nvChart, function(value) {
+                var options = scope.$eval(iAttrs.nvChart);
+                if (options) bindOptions(options);
+                else unbindOptions();
+            });
 
-                    var bindOptions = function(options) {
-                        options.$chartScope = $scope;
-                        options.$chartScope.refresh = function () {
-                            chart.updateConfig(options);
-                            chart.render();
-                        };
+            var bindOptions = function(options) {
+                options.$chartScope = $scope;
+                options.$chartScope.refresh = function () {
+                    chart.updateConfig(options);
+                    chart.render();
+                };
 
-                        var chartTypeWatcher = function (newVal) {
-                            if (chart.config.chartType === newVal) return;
-                            options.$chartScope.refresh();
-                        };
-                        watches.push(scope.$watch(iAttrs.ngD3 + '.chartType', chartTypeWatcher));
+                var chartTypeWatcher = function (newVal) {
+                    if (chart.config.chartType === newVal) return;
+                    options.$chartScope.refresh();
+                };
+                watches.push(scope.$watch(iAttrs.nvChart + '.chartType', chartTypeWatcher));
 
-                        // setup data watcher
-                        if (typeof options.data === 'string') {
-                            var dataWatcher = function (e) {
-                                chart.data = e ? $.extend([], e) : [];
-                                chart.render();
-                                //iElement.empty().append(chart.render());
-                            };
-                            watches.push(scope.$watch(options.data, dataWatcher));
-                            watches.push(scope.$watch(options.data + '.length', function() {
-                                dataWatcher(scope.$eval(options.data));
-                            }));
-                        }
-                    };
-
-                    var unbindOptions = function() {
-                        angular.forEach(watches, function(e) { e(); });
-                        watches = [];
-                        chart.data = [];
+                // setup data watcher
+                if (typeof options.data === 'string') {
+                    var dataWatcher = function (e) {
+                        chart.data = e ? $.extend([], e) : [];
                         chart.render();
+                        //iElement.empty().append(chart.render());
                     };
-
-
+                    watches.push(scope.$watch(options.data, dataWatcher));
+                    watches.push(scope.$watch(options.data + '.length', function() {
+                        dataWatcher(scope.$eval(options.data));
+                    }));
                 }
+
+                options.$chartScope.$on('$destroy', function (event) {
+                    unbindOptions();
+                    options.$chartScope = null;
+                });
             };
+
+            var unbindOptions = function() {
+                angular.forEach(watches, function(e) { e(); });
+                watches = [];
+                chart.data = [];
+                chart.render();
+            };
+
 
         }
     };
 
-    return ngD3Directive;
+    return d3Directive;
 }]);
+d3App
+.directive('nvLegend', [function() {
+
+
+
+}]);
+
 }(window, jQuery));

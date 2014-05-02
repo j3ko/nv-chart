@@ -4,6 +4,7 @@ module.exports = function (grunt) {
         srcFiles: [
             'src/*.js',
             'src/classes/*.js',
+            'src/controllers/*.js',
             'src/directives/*.js'
         ],
         testFiles: [
@@ -52,7 +53,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 banner: '/***********************************************\n' +
-                    '* ng-d3 JavaScript Library\n' +
+                    '* nv-chart JavaScript Library\n' +
                     '* Author: Jeffrey Ko\n' +
                     '* License: MIT (http://www.opensource.org/licenses/mit-license.php)\n' +
                     '* Compiled At: <%= grunt.template.today("mm/dd/yyyy HH:MM") %>\n' +

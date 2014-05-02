@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head lang="en">
+		<style>
+            .chartStyles {
+                height: 500px;
+            }
+		</style>
+        <meta charset="utf-8">
+        <title>nv-chart examples</title>
+        <link rel="stylesheet" type="text/css" href="../lib/nv.d3.css" />
+        <script type="text/javascript" src="../lib/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="../lib/angular.js"></script>
+        <script type="text/javascript" src="../lib/d3.js"></script>
+        <script type="text/javascript" src="../lib/nv.d3.js"></script>
+		<script type="text/javascript" src="../build/nv-chart.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div class="chartStyles" nv-chart="chartOptions"></div>
+    </body>
+	<script >
+		var app = angular.module('myApp', ['nvChart']);
+		app.controller('MyCtrl', function($scope) {    
+			
+			var data = function() {
+                return  [
+                    {
+                        "label": "One",
+                        "value" : 29.765957771107
+                    } ,
+                    {
+                        "label": "Two",
+                        "value" : 0
+                    } ,
+                    {
+                        "label": "Three",
+                        "value" : 32.807804682612
+                    } ,
+                    {
+                        "label": "Four",
+                        "value" : 196.45946739256
+                    } ,
+                    {
+                        "label": "Five",
+                        "value" : 0.19434030906893
+                    } ,
+                    {
+                        "label": "Six",
+                        "value" : 98.079782601442
+                    } ,
+                    {
+                        "label": "Seven",
+                        "value" : 13.925743130903
+                    } ,
+                    {
+                        "label": "Eight",
+                        "value" : 5.1387322875705
+                    }
+                ];
+		    }
+
+			$scope.myData = data();	
+			
+            $scope.chartOptions = {
+                chartType: 'pieChart',
+                data: 'myData',
+                xValue: function(d) {
+                  return d.label;
+                },
+                yValue: function(d) {
+                  return d.value;
+                },
+                showLabels: true,
+                labelThreshold: 0.5,
+                labelType: 'percent',
+                donut: true,
+                donutRatio: 0.35,
+                transitionDuration: 350
+            }
+        });		
+	</script>	
+</html>

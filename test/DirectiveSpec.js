@@ -1,11 +1,11 @@
 (function() {
     'use strict';
 
-    describe('Directive: ng-d3', function() {
+    describe('Directive: nv-chart', function() {
         var element;
         var $scope;
 
-        beforeEach(module('ngD3'));
+        beforeEach(module('nvChart'));
         describe('pre-initialized', function () {
 
             beforeEach(inject(function(_$compile_, _$rootScope_) {
@@ -19,7 +19,7 @@
                     chartType: 'lineChart',
                     data: 'chartData'
                 };
-                element = angular.element('<div ng-d3="chartOptions"></div>');
+                element = angular.element('<div nv-chart="chartOptions"></div>');
                 _$compile_(element)($scope);
                 $scope.$digest();
             }));
@@ -59,7 +59,7 @@
 
             beforeEach(inject(function(_$compile_, _$rootScope_) {
                 $scope = _$rootScope_;
-                element = angular.element('<div ng-d3="chartOptions"></div>');
+                element = angular.element('<div nv-chart="chartOptions"></div>');
                 _$compile_(element)($scope);
                 $scope.$digest();
             }));

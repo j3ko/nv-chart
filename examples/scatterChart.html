@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head lang="en">
+		<style>
+            .chartStyles {
+                height: 500px;
+            }
+		</style>
+        <meta charset="utf-8">
+        <title>nv-chart examples</title>
+        <link rel="stylesheet" type="text/css" href="../lib/nv.d3.css" />
+        <script type="text/javascript" src="../lib/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="../lib/angular.js"></script>
+        <script type="text/javascript" src="../lib/d3.js"></script>
+        <script type="text/javascript" src="../lib/nv.d3.js"></script>
+		<script type="text/javascript" src="../build/nv-chart.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div class="chartStyles" nv-chart="chartOptions"></div>
+    </body>
+	<script >
+		var app = angular.module('myApp', ['nvChart']);
+		app.controller('MyCtrl', function($scope) {
+
+            function randomData(groups, points) { //# groups,# points per group
+                var data = [],
+                        shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+                        random = d3.random.normal();
+
+                for (i = 0; i < groups; i++) {
+                    data.push({
+                        key: 'Group ' + i,
+                        values: []
+                    });
+
+                    for (j = 0; j < points; j++) {
+                        data[i].values.push({
+                            x: random()
+                            , y: random()
+                            , size: Math.random()   //Configure the size of each scatter point
+                            , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
+                        });
+                    }
+                }
+
+                return data;
+            }
+
+			$scope.myData = randomData(4, 40);
+			
+            $scope.chartOptions = {
+                chartType: 'scatterChart',
+                data: 'myData',
+                showDistX: true,
+                showDistY: true,
+                transitionDuration: 350,
+                tooltipContent: function(key) {
+                    return '<h3>' + key + '</h3>';
+                },
+                xAxisTickFormat: d3.format('.02f'),
+                yAxisTickFormat: d3.format('.02f'),
+                onlyCircles: false
+            }
+        });		
+	</script>	
+</html>

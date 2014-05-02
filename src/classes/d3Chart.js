@@ -1,7 +1,7 @@
-var ngChart = function($scope, $element, options) {
+var d3Chart = function($scope, $element, options) {
 
     var self = this, defaults = {
-        // ng-d3 properties
+        // nv-chart properties
         chartType: null,
         data: [],
 
@@ -61,11 +61,18 @@ var ngChart = function($scope, $element, options) {
 
         // discrete bar
         staggerLabels: false,
-        showValues: false
+        showValues: false,
+
+        // scatter
+        showDistX: false,
+        showDistY: false,
+        onlyCircles: false
     };
 
     self.data = [];
-    
+
+    self.models = [];
+
     self.config = $.extend(defaults, options);
 
     self.updateConfig = function (options) {
@@ -74,6 +81,12 @@ var ngChart = function($scope, $element, options) {
         if (typeof self.config.data === "object") {
             self.data = self.config.data;
         }
+    };
+
+    self.updateModels = function() {
+        angular.forEach(self.models, function(e){
+            e.update();
+        });
     };
     
     self.setChartType = function (type) {
@@ -164,7 +177,15 @@ var ngChart = function($scope, $element, options) {
             model.donut(!!self.config.donut);
         if (model.donutRatio)
             model.donutRatio(self.config.donutRatio);
-        
+
+        // scatter
+        if (model.showDistX)
+            model.showDistX(!!self.config.showDistX);
+        if (model.showDistY)
+            model.showDistY(!!self.config.showDistY);
+        if (model.scatter && model.scatter.onlyCircles)
+            model.scatter.onlyCircles(!! self.config.onlyCircles);
+
         self.configAxis(model);
             
         $element.empty();
@@ -176,6 +197,8 @@ var ngChart = function($scope, $element, options) {
             svg = svg.transition().duration(self.config.transitionDuration);
         
         svg.call(model);
+
+        self.models.push(model);
 
         nv.utils.windowResize(model.update);
     };

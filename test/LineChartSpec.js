@@ -4,11 +4,11 @@
         var element;
         var $scope;
 
-        beforeEach(module('ngD3'));
+        beforeEach(module('nvChart'));
 
         beforeEach(inject(function(_$compile_, _$rootScope_) {
             $scope = _$rootScope_;
-            element = angular.element('<div ng-d3="chartOptions"></div>');
+            element = angular.element('<div nv-chart="chartOptions"></div>');
             _$compile_(element)($scope);
             $scope.$digest();
         }));
@@ -114,36 +114,20 @@
             });
 
             it('should have useInteractiveGuideline set', function() {
-                $scope.chartOptions = {
-                    chartType: 'lineChart',
-                    data: 'chartData',
-                    useInteractiveGuideline: null
-                };
-                $scope.$digest();
+                expect(element.has('.nv-interactiveLineLayer').length).toBeFalsy();
 
-                // todo: write test
+                $scope.chartOptions.useInteractiveGuideline = true;
+                $scope.chartOptions.$chartScope.refresh();
+
+                expect(element.has('.nv-interactiveLineLayer').length).toBeTruthy();
             });
 
             it('should have tooltips set', function() {
-                $scope.chartOptions = {
-                    chartType: 'lineChart',
-                    data: 'chartData',
-                    tooltips: null
-                };
-                $scope.$digest();
-
-                // todo: write test
+                // todo: tooltips write test
             });
 
             it('should have tooltipContent set', function() {
-                $scope.chartOptions = {
-                    chartType: 'lineChart',
-                    data: 'chartData',
-                    tooltipContent: null
-                };
-                $scope.$digest();
-
-                // todo: write test
+                // todo: tooltipContent write test
             });
 
             it('should have noData set', function() {

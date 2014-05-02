@@ -2,13 +2,13 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
-<script type="text/javascript" src="../build/ng-d3.js"></script>
+<script type="text/javascript" src="../build/nv-chart.js"></script>
 <script>
-    angular.module('myApp',['ngD3']);
+    angular.module('myApp',['nvChart']);
 </script>
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" /> 
 <body ng-app="myApp" ng-controller="MyCtrl">
-    <div ng-d3="chartOptions"></div>
+    <div nv-chart="chartOptions"></div>
 	<script>
 		function MyCtrl($scope) {
 			$scope.chartData = [

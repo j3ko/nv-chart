@@ -7,19 +7,19 @@
             }
 		</style>
         <meta charset="utf-8">
-        <title>ng-d3 examples</title>  
+        <title>nv-chart examples</title>
         <link rel="stylesheet" type="text/css" href="../lib/nv.d3.css" />
         <script type="text/javascript" src="../lib/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="../lib/angular.js"></script>
         <script type="text/javascript" src="../lib/d3.js"></script>
         <script type="text/javascript" src="../lib/nv.d3.js"></script>
-		<script type="text/javascript" src="../build/ng-d3.js"></script>
+		<script type="text/javascript" src="../build/nv-chart.js"></script>
     </head>
     <body ng-controller="MyCtrl">
-        <div class="chartStyles" ng-d3="chartOptions"></div>
+        <div class="chartStyles" nv-chart="chartOptions"></div>
     </body>
 	<script >
-		var app = angular.module('myApp', ['ngD3']);
+		var app = angular.module('myApp', ['nvChart']);
 		app.controller('MyCtrl', function($scope) {    
 			
 			var data = function() {
