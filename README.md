@@ -13,7 +13,7 @@ Line plus bar with focus chart: http://plnkr.co/edit/KHjItVXPhkBDbPqXPBVr?p=prev
 
 **Dependencies:**
 
-ng-d3 requires the following javascript libraries:
+nv-chart requires the following javascript libraries:
 
 jQuery (http://jquery.com/)
 ```html

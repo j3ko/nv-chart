@@ -67,11 +67,11 @@ var d3Chart = function($scope, $element, options) {
         showDistX: false,
         showDistY: false,
         onlyCircles: false
-    };
+    }, events = new d3Event($scope);
 
     self.data = [];
 
-    self.models = [];
+    self.model = self.modelFn = null;
 
     self.config = $.extend(defaults, options);
 
@@ -83,16 +83,14 @@ var d3Chart = function($scope, $element, options) {
         }
     };
 
-    self.updateModels = function() {
-        angular.forEach(self.models, function(e){
-            e.update();
-        });
+    self.updateModel = function() {
+        if (self.model) self.drawModel(self.model);
     };
-    
+
     self.setChartType = function (type) {
         if (typeof type !== 'string') return;
     
-        self.model = nv.models[type];
+        self.modelFn = nv.models[type];
     };
     
     self.configAxis = function (model) {
@@ -140,9 +138,18 @@ var d3Chart = function($scope, $element, options) {
     self.render = function () {
         
         self.setChartType(self.config.chartType);
-        if (!self.model) return;
-        var model = self.model();
-        
+        if (!self.modelFn) return;
+        var model = self.modelFn();
+
+        self.drawModel(model);
+    };
+
+    self.redraw = function() {
+        if (self.model) self.model.update();
+    };
+
+    self.drawModel = function(model) {
+
         if (model.margin && self.config.margin !== null && typeof self.config.margin === 'object')
             model.margin(self.config.margin);
         if (model.color && $.isArray(self.config.color) && self.config.color.length)
@@ -169,7 +176,13 @@ var d3Chart = function($scope, $element, options) {
             model.showValues(!!self.config.showValues);
         if (model.showLabels)
             model.showLabels(!!self.config.showLabels);
-        if (model.labelThreshold)
+        if (model.forceX && self.config.forceX instanceof Array)
+            model.forceX(self.config.forceX);
+        if (model.forceY && self.config.forceY instanceof Array)
+            model.forceY(self.config.forceY);
+
+        // pie
+        if (model.labelThreshold && typeof self.config.labelThreshold === 'number')
             model.labelThreshold(self.config.labelThreshold);
         if (model.labelType)
             model.labelType(self.config.labelType);
@@ -184,23 +197,23 @@ var d3Chart = function($scope, $element, options) {
         if (model.showDistY)
             model.showDistY(!!self.config.showDistY);
         if (model.scatter && model.scatter.onlyCircles)
-            model.scatter.onlyCircles(!! self.config.onlyCircles);
+            model.scatter.onlyCircles(!!self.config.onlyCircles);
 
         self.configAxis(model);
-            
+
         $element.empty();
+
         var svg = d3.select($element[0])
-        .append('svg')
-        .datum(self.data);
-        
+            .append('svg')
+            .datum(self.data);
+
         if (typeof self.config.transitionDuration === 'number')
             svg = svg.transition().duration(self.config.transitionDuration);
-        
+
         svg.call(model);
 
-        self.models.push(model);
+        events.bindModel(model);
 
-        nv.utils.windowResize(model.update);
+        self.model = model;
     };
-        
 };

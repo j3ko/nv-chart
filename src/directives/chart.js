@@ -2,11 +2,22 @@ d3App
 .directive('nvChart', [function() {
     var d3Directive = {
         scope: true,
-        link: function($scope, iElement, iAttrs, controller) {
+        require: '?^nvChartContainer',
+        link: function($scope, iElement, iAttrs, d3Ctrl) {
             var scope = $scope.$parent;
             var $element = $(iElement);
             var chart = new d3Chart($scope, $element);
+            var event = new d3Event($scope); // todo: hookup events
             var watches = [];
+
+            $scope.getElementDimensions = function () {
+                return { 'h': $element.height(), 'w': $element.width() };
+            };
+
+            // todo: is this necessary?
+            $element.bind('resize', function () {
+                $scope.$apply();
+            });
 
             $scope.$watch(iAttrs.nvChart, function(value) {
                 var options = scope.$eval(iAttrs.nvChart);
@@ -15,15 +26,19 @@ d3App
             });
 
             var bindOptions = function(options) {
-                options.$chartScope = $scope;
-                options.$chartScope.refresh = function () {
-                    chart.updateConfig(options);
-                    chart.render();
+
+                options.$reload = function() {
+                    chart.updateConfig(scope.$eval(iAttrs.nvChart));
+                    chart.updateModel();
                 };
 
+                watches.push($scope.$watch($scope.getElementDimensions, chart.redraw, true));
+
+                // setup chart type watcher
                 var chartTypeWatcher = function (newVal) {
                     if (chart.config.chartType === newVal) return;
-                    options.$chartScope.refresh();
+                    chart.updateConfig(options);
+                    chart.render();
                 };
                 watches.push(scope.$watch(iAttrs.nvChart + '.chartType', chartTypeWatcher));
 
@@ -32,7 +47,6 @@ d3App
                     var dataWatcher = function (e) {
                         chart.data = e ? $.extend([], e) : [];
                         chart.render();
-                        //iElement.empty().append(chart.render());
                     };
                     watches.push(scope.$watch(options.data, dataWatcher));
                     watches.push(scope.$watch(options.data + '.length', function() {
@@ -40,9 +54,9 @@ d3App
                     }));
                 }
 
-                options.$chartScope.$on('$destroy', function (event) {
+                $scope.$on('$destroy', function (event) {
                     unbindOptions();
-                    options.$chartScope = null;
+                    delete options.$reload;
                 });
             };
 
@@ -52,7 +66,6 @@ d3App
                 chart.data = [];
                 chart.render();
             };
-
 
         }
     };

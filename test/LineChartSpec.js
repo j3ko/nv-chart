@@ -49,7 +49,7 @@
                 });
 
                 $scope.chartOptions.margin = { top: 1, right: 1, bottom: 1, left: 1 };
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 var post = $.map(element.find('[transform]'), function (e) {
                     return $(e).attr('transform');
@@ -62,7 +62,7 @@
                 var pre = $(element.find('rect').first()).attr('width');
 
                 $scope.chartOptions.width = 400;
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 var post = $(element.find('rect').first()).attr('width');
 
@@ -73,7 +73,7 @@
                 var pre = $(element.find('rect').first()).attr('height');
 
                 $scope.chartOptions.height = 200;
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 var post = $(element.find('rect').first()).attr('height');
 
@@ -86,7 +86,7 @@
                 });
 
                 $scope.chartOptions.color = ['#FFF'];
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 var post = $.map(element.find('.nv-line'), function(e) {
                     return $(e).parent().attr('style');
@@ -99,7 +99,7 @@
                 expect(element.has('.nv-legend').length).toBeTruthy();
 
                 $scope.chartOptions.showLegend = false;
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 expect(element.has('.nv-legend').length).toBeFalsy();
             });
@@ -108,7 +108,7 @@
                 expect($(element.find('.nv-y.nv-axis').first()).attr('transform')).toBeUndefined();
 
                 $scope.chartOptions.rightAlignYAxis = true;
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 expect($(element.find('.nv-y.nv-axis').first()).attr('transform')).toBeDefined();
             });
@@ -117,9 +117,17 @@
                 expect(element.has('.nv-interactiveLineLayer').length).toBeFalsy();
 
                 $scope.chartOptions.useInteractiveGuideline = true;
-                $scope.chartOptions.$chartScope.refresh();
+                $scope.chartOptions.$reload();
 
                 expect(element.has('.nv-interactiveLineLayer').length).toBeTruthy();
+            });
+
+            it('should have forceX set', function() {
+               // todo: forceX write test
+            });
+
+            it('should have forceY set', function() {
+                // todo: forceY write test
             });
 
             it('should have tooltips set', function() {
@@ -131,24 +139,18 @@
             });
 
             it('should have noData set', function() {
-                $scope.chartOptions = {
-                    chartType: 'lineChart',
-                    data: 'chartData',
-                    noData: null
-                };
+                $scope.chartData = null;
                 $scope.$digest();
 
-                // todo: write test
+                expect(element.find('.nv-noData').html()).toEqual('No Data Available.');
+
+                $scope.chartOptions.noData = 'Test No Data';
+                $scope.chartOptions.$reload();
+
+                expect(element.find('.nv-noData').html()).toEqual('Test No Data');
             });
 
             it('should have transitionDuration set', function() {
-                $scope.chartOptions = {
-                    chartType: 'lineChart',
-                    data: 'chartData',
-                    transitionDuration: null
-                };
-                $scope.$digest();
-
                 // todo: write test
             });
 
