@@ -1,5 +1,5 @@
 d3App
-.directive('nvChart', [function() {
+.directive('nvChart', ['$window', function($window) {
     var d3Directive = {
         scope: true,
         require: '?^nvChartContainer',
@@ -7,19 +7,16 @@ d3App
             var scope = $scope.$parent;
             var $element = $(iElement);
             var chart = new d3Chart($scope, $element);
-            var event = new d3Event($scope); // todo: hookup events
+            //var event = new d3Event($scope); // todo: hookup events
             var watches = [];
 
             $scope.getElementDimensions = function () {
                 return { 'h': $element.height(), 'w': $element.width() };
             };
 
-            // todo: is this necessary?
-            $element.bind('resize', function () {
-                $scope.$apply();
-            });
+            angular.element($window).bind('resize.nv-chart', chart.redraw);
 
-            $scope.$watch(iAttrs.nvChart, function(value) {
+            $scope.$watch(iAttrs.nvChart, function() {
                 var options = scope.$eval(iAttrs.nvChart);
                 if (options) bindOptions(options);
                 else unbindOptions();
@@ -28,7 +25,7 @@ d3App
             var bindOptions = function(options) {
 
                 options.$reload = function() {
-                    chart.updateConfig(scope.$eval(iAttrs.nvChart));
+                    chart.updateConfig(options);
                     chart.updateModel();
                 };
 
@@ -54,7 +51,7 @@ d3App
                     }));
                 }
 
-                $scope.$on('$destroy', function (event) {
+                $scope.$on('$destroy', function () {
                     unbindOptions();
                     delete options.$reload;
                 });

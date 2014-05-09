@@ -212,7 +212,7 @@ var d3Chart = function($scope, $element, options) {
 
         svg.call(model);
 
-        events.bindModel(model);
+        //events.bindModel(model);
 
         self.model = model;
     };
