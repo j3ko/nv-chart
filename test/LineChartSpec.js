@@ -142,12 +142,12 @@
                 $scope.chartData = null;
                 $scope.$digest();
 
-                expect(element.find('.nv-noData').html()).toEqual('No Data Available.');
+                expect(element.find('.nv-noData').text()).toEqual('No Data Available.');
 
                 $scope.chartOptions.noData = 'Test No Data';
                 $scope.chartOptions.$reload();
 
-                expect(element.find('.nv-noData').html()).toEqual('Test No Data');
+                expect(element.find('.nv-noData').text()).toEqual('Test No Data');
             });
 
             it('should have transitionDuration set', function() {
