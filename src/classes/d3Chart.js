@@ -1,4 +1,4 @@
-var d3Chart = function($scope, $element, options) {
+var d3Chart = function($scope, $element, event) {
 
     var self = this, defaults = {
         // nv-chart properties
@@ -67,13 +67,23 @@ var d3Chart = function($scope, $element, options) {
         showDistX: false,
         showDistY: false,
         onlyCircles: false
-    }, events = new d3Event($scope);
+    };
+
+    var availAxes = [
+        'xAxis',
+        'x2Axis',
+        'yAxis',
+        'y1Axis',
+        'y2Axis',
+        'y3Axis',
+        'y4Axis'
+    ];
 
     self.data = [];
 
     self.model = self.modelFn = null;
 
-    self.config = $.extend(defaults, options);
+    self.config = $.extend(defaults, {});
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
@@ -105,17 +115,7 @@ var d3Chart = function($scope, $element, options) {
         if (model.yAxis && model.yAxis.showMaxMin)
             model.yAxis.showMaxMin(!!self.config.yShowMaxMin);
 
-        var axes = [
-            'xAxis',
-            'x2Axis',
-            'yAxis',
-            'y1Axis',
-            'y2Axis',
-            'y3Axis',
-            'y4Axis'
-        ];
-
-        angular.forEach(axes, function(e) {
+        angular.forEach(availAxes, function(e) {
             self.setAxisLabel(model, e);
             self.setTickFormat(model, e);
         });
@@ -136,7 +136,9 @@ var d3Chart = function($scope, $element, options) {
     };
     
     self.render = function () {
-        
+
+        if (self.model) event.unbindModel(self.model);
+
         self.setChartType(self.config.chartType);
         if (!self.modelFn) return;
         var model = self.modelFn();
@@ -162,6 +164,10 @@ var d3Chart = function($scope, $element, options) {
             model.rightAlignYAxis(!!self.config.rightAlignYAxis);
         if (model.showLegend)
             model.showLegend(!!self.config.showLegend);
+        if (model.showXAxis)
+            model.showXAxis(!!self.config.showXAxis);
+        if (model.showYAxis)
+            model.showYAxis(!!self.config.showYAxis);
         if (typeof self.config.noData === 'string')
             model.noData(self.config.noData);
         if (model.useInteractiveGuideline)
@@ -201,7 +207,7 @@ var d3Chart = function($scope, $element, options) {
 
         self.configAxis(model);
 
-        $element.empty();
+        $element.children('svg').remove();
 
         var svg = d3.select($element[0])
             .append('svg')
@@ -212,7 +218,7 @@ var d3Chart = function($scope, $element, options) {
 
         svg.call(model);
 
-        //events.bindModel(model);
+        event.bindModel(model);
 
         self.model = model;
     };

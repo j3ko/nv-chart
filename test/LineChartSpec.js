@@ -123,11 +123,25 @@
             });
 
             it('should have forceX set', function() {
-               // todo: forceX write test
+                var minMax = $.map(element.find('.nv-x.nv-axis .nv-axisMaxMin').find('text'), function(e) { return $(e).text(); });
+                expect(minMax).toContain('1', '3');
+
+                $scope.chartOptions.forceX = [0, 6];
+                $scope.chartOptions.$reload();
+
+                minMax = $.map(element.find('.nv-x.nv-axis .nv-axisMaxMin').find('text'), function(e) { return $(e).text(); });
+                expect(minMax).toContain('0', '6');
             });
 
             it('should have forceY set', function() {
-                // todo: forceY write test
+                var minMax = $.map(element.find('.nv-y.nv-axis .nv-axisMaxMin').find('text'), function(e) { return $(e).text(); });
+                expect(minMax).toContain('5', '15');
+
+                $scope.chartOptions.forceY = [0, 20];
+                $scope.chartOptions.$reload();
+
+                minMax = $.map(element.find('.nv-y.nv-axis .nv-axisMaxMin').find('text'), function(e) { return $(e).text(); });
+                expect(minMax).toContain('0', '20');
             });
 
             it('should have tooltips set', function() {
@@ -154,24 +168,30 @@
                 // todo: write test
             });
 
+            it('should have showXAxis set', function() {
+                expect(element.find('.nv-x.nv-axis').children().length).toBeTruthy();
+
+                $scope.chartOptions.showXAxis = false;
+                $scope.chartOptions.$reload();
+
+                expect(element.find('.nv-x.nv-axis').children().length).toBeFalsy();
+            });
+
+            it('should have showYAxis set', function() {
+                expect(element.find('.nv-y.nv-axis').children().length).toBeTruthy();
+
+                $scope.chartOptions.showYAxis = false;
+                $scope.chartOptions.$reload();
+
+                expect(element.find('.nv-y.nv-axis').children().length).toBeFalsy();
+            });
         });
 
         describe('with chartData', function() {
             beforeEach(function() {
                 $scope.chartOptions = {
                     chartType: 'lineChart',
-                    data: 'chartData',
-                    margin: null,
-                    width: null,
-                    height: null,
-                    color: null,
-                    showLegend: null,
-                    rightAlignYAxis: false,
-                    useInteractiveGuideline: true,
-                    tooltips: true,
-                    tooltipContent: null,
-                    noData: null,
-                    transitionDuration: null
+                    data: 'chartData'
                 };
             });
 
@@ -183,8 +203,9 @@
                     }];
                 $scope.$digest();
 
-                // todo: write test
+                expect(element.find('.nv-line').length).toBeTruthy();
             });
+
         });
     });
 })();

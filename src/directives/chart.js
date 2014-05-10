@@ -1,13 +1,12 @@
 d3App
-.directive('nvChart', ['$window', function($window) {
+.directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
     var d3Directive = {
         scope: true,
-        require: '?^nvChartContainer',
-        link: function($scope, iElement, iAttrs, d3Ctrl) {
+        link: function($scope, elem, attrs) {
             var scope = $scope.$parent;
-            var $element = $(iElement);
-            var chart = new d3Chart($scope, $element);
-            //var event = new d3Event($scope); // todo: hookup events
+            var $element = $(elem);
+            var event = new d3Event($scope, $rootScope);
+            var chart = new d3Chart($scope, $element, event);
             var watches = [];
 
             $scope.getElementDimensions = function () {
@@ -16,8 +15,8 @@ d3App
 
             angular.element($window).bind('resize.nv-chart', chart.redraw);
 
-            $scope.$watch(iAttrs.nvChart, function() {
-                var options = scope.$eval(iAttrs.nvChart);
+            $scope.$watch(attrs.nvChart, function() {
+                var options = scope.$eval(attrs.nvChart);
                 if (options) bindOptions(options);
                 else unbindOptions();
             });
@@ -37,7 +36,7 @@ d3App
                     chart.updateConfig(options);
                     chart.render();
                 };
-                watches.push(scope.$watch(iAttrs.nvChart + '.chartType', chartTypeWatcher));
+                watches.push(scope.$watch(attrs.nvChart + '.chartType', chartTypeWatcher));
 
                 // setup data watcher
                 if (typeof options.data === 'string') {
@@ -54,6 +53,8 @@ d3App
                 $scope.$on('$destroy', function () {
                     unbindOptions();
                     delete options.$reload;
+                    angular.element($window).off('resize.nv-chart', chart.redraw);
+                    event.unbindModel(chart.model);
                 });
             };
 

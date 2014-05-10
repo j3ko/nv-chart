@@ -2,7 +2,7 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/08/2014 20:08
+* Compiled At: 05/10/2014 01:41
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -29,7 +29,7 @@ if (!Function.prototype.bind) {
     };
 }
 
-var d3Chart = function($scope, $element, options) {
+var d3Chart = function($scope, $element, event) {
 
     var self = this, defaults = {
         // nv-chart properties
@@ -98,13 +98,23 @@ var d3Chart = function($scope, $element, options) {
         showDistX: false,
         showDistY: false,
         onlyCircles: false
-    }, events = new d3Event($scope);
+    };
+
+    var availAxes = [
+        'xAxis',
+        'x2Axis',
+        'yAxis',
+        'y1Axis',
+        'y2Axis',
+        'y3Axis',
+        'y4Axis'
+    ];
 
     self.data = [];
 
     self.model = self.modelFn = null;
 
-    self.config = $.extend(defaults, options);
+    self.config = $.extend(defaults, {});
 
     self.updateConfig = function (options) {
         self.config = $.extend(self.config, options);
@@ -136,17 +146,7 @@ var d3Chart = function($scope, $element, options) {
         if (model.yAxis && model.yAxis.showMaxMin)
             model.yAxis.showMaxMin(!!self.config.yShowMaxMin);
 
-        var axes = [
-            'xAxis',
-            'x2Axis',
-            'yAxis',
-            'y1Axis',
-            'y2Axis',
-            'y3Axis',
-            'y4Axis'
-        ];
-
-        angular.forEach(axes, function(e) {
+        angular.forEach(availAxes, function(e) {
             self.setAxisLabel(model, e);
             self.setTickFormat(model, e);
         });
@@ -167,7 +167,9 @@ var d3Chart = function($scope, $element, options) {
     };
     
     self.render = function () {
-        
+
+        if (self.model) event.unbindModel(self.model);
+
         self.setChartType(self.config.chartType);
         if (!self.modelFn) return;
         var model = self.modelFn();
@@ -193,6 +195,10 @@ var d3Chart = function($scope, $element, options) {
             model.rightAlignYAxis(!!self.config.rightAlignYAxis);
         if (model.showLegend)
             model.showLegend(!!self.config.showLegend);
+        if (model.showXAxis)
+            model.showXAxis(!!self.config.showXAxis);
+        if (model.showYAxis)
+            model.showYAxis(!!self.config.showYAxis);
         if (typeof self.config.noData === 'string')
             model.noData(self.config.noData);
         if (model.useInteractiveGuideline)
@@ -232,7 +238,7 @@ var d3Chart = function($scope, $element, options) {
 
         self.configAxis(model);
 
-        $element.empty();
+        $element.children('svg').remove();
 
         var svg = d3.select($element[0])
             .append('svg')
@@ -243,19 +249,32 @@ var d3Chart = function($scope, $element, options) {
 
         svg.call(model);
 
-        //events.bindModel(model);
+        event.bindModel(model);
 
         self.model = model;
     };
 };
 
-var d3Event = function($scope) {
+var d3Event = function($scope, $rootScope) {
     var self = this;
+    var elems = ['lines', 'bars', 'pie', 'discretebar', 'multibar', 'scatter'];
 
     self.bindModel = function(model) {
         if (model.legend) {
             model.legend.dispatch.on('legendClick.nv-chart', function (d, i) {
-                $scope.$emit('legendClick.nv-chart', d, i);
+                $rootScope.$broadcast('legendClick.nv-chart', d, i);
+            });
+        }
+
+        angular.forEach(elems, function(e) {
+            self.bindElementClick(model, e);
+        });
+    };
+
+    self.bindElementClick = function(model, elem) {
+        if (model[elem] && model[elem].dispatch.elementClick) {
+            model[elem].dispatch.on('elementClick.nv-chart', function(d, i) {
+                $rootScope.$broadcast('elementClick.nv-chart', d, i);
             });
         }
     };
@@ -264,38 +283,28 @@ var d3Event = function($scope) {
         if (model.legend) {
             model.legend.dispatch.on('legendClick.nv-chart', null);
         }
+
+        angular.forEach(elems, function(e) {
+            self.unbindElementClick(model, e);
+        });
+    };
+
+    self.unbindElementClick = function(model, elem) {
+        if (model[elem] && model[elem].dispatch.elementClick) {
+            model[elem].dispatch.on('elementClick.nv-chart', null);
+        }
     };
 };
 
 d3App
-.controller('d3Controller', ['$scope', function d3Ctrl($scope){
-    var ctrl = this;
-
-
-
-
-}]);
-
-d3App
-.directive('nvChartContainer', [function() {
-    return {
-        controller: 'd3Controller',
-        link: function (scope, elem, attrs, d3Ctrl) {
-
-        }
-    };
-}]);
-
-d3App
-.directive('nvChart', ['$window', function($window) {
+.directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
     var d3Directive = {
         scope: true,
-        require: '?^nvChartContainer',
-        link: function($scope, iElement, iAttrs, d3Ctrl) {
+        link: function($scope, elem, attrs) {
             var scope = $scope.$parent;
-            var $element = $(iElement);
-            var chart = new d3Chart($scope, $element);
-            //var event = new d3Event($scope); // todo: hookup events
+            var $element = $(elem);
+            var event = new d3Event($scope, $rootScope);
+            var chart = new d3Chart($scope, $element, event);
             var watches = [];
 
             $scope.getElementDimensions = function () {
@@ -304,8 +313,8 @@ d3App
 
             angular.element($window).bind('resize.nv-chart', chart.redraw);
 
-            $scope.$watch(iAttrs.nvChart, function() {
-                var options = scope.$eval(iAttrs.nvChart);
+            $scope.$watch(attrs.nvChart, function() {
+                var options = scope.$eval(attrs.nvChart);
                 if (options) bindOptions(options);
                 else unbindOptions();
             });
@@ -325,7 +334,7 @@ d3App
                     chart.updateConfig(options);
                     chart.render();
                 };
-                watches.push(scope.$watch(iAttrs.nvChart + '.chartType', chartTypeWatcher));
+                watches.push(scope.$watch(attrs.nvChart + '.chartType', chartTypeWatcher));
 
                 // setup data watcher
                 if (typeof options.data === 'string') {
@@ -342,6 +351,8 @@ d3App
                 $scope.$on('$destroy', function () {
                     unbindOptions();
                     delete options.$reload;
+                    angular.element($window).off('resize.nv-chart', chart.redraw);
+                    event.unbindModel(chart.model);
                 });
             };
 
@@ -356,17 +367,6 @@ d3App
     };
 
     return d3Directive;
-}]);
-
-d3App
-.directive('nvLegend', [function() {
-    return {
-        require: '^nvChartContainer',
-        scope: true,
-        link: function (scope, elem, attrs, d3Ctrl) {
-
-        }
-    };
 }]);
 
 }(window, jQuery));
