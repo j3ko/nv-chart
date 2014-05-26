@@ -85,7 +85,7 @@ module.exports = function (grunt) {
             },
             prod: {
                 options: {
-                    yuicompress: true
+                    cleancss: true
                 },
                 files: {
                     "build/nv-chart.min.css": ['src/less/global.less']

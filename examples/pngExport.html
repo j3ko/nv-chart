@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head lang="en">
+		<style>
+            .chartStyles {
+                height: 500px;
+            }
+		</style>
+        <meta charset="utf-8">
+        <title>nv-chart examples</title>
+        <link rel="stylesheet" type="text/css" href="../lib/nv.d3.css" />
+        <link rel="stylesheet" type="text/css" href="../build/nv-chart.css" />
+        <script type="text/javascript" src="../lib/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="../lib/angular.js"></script>
+        <script type="text/javascript" src="../lib/d3.js"></script>
+        <script type="text/javascript" src="../lib/nv.d3.js"></script>
+		<script type="text/javascript" src="../build/nv-chart.js"></script>
+        <script type="text/javascript" src="../plugins/nv-chart-export.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div class="chartStyles" nv-chart="chartOptions"></div>
+    </body>
+	<script >
+		var app = angular.module('myApp', ['nvChart']);
+		app.controller('MyCtrl', function($scope) {    
+			
+			var data = function() {
+				  var sin = [],
+					  cos = [];
+
+				  for (var i = 0; i < 100; i++) {
+					sin.push({x: i, y: Math.sin(i/10)});
+					cos.push({x: i, y: .5 * Math.cos(i/10)});
+				  }
+
+				  return [
+					{
+					  values: sin,
+					  key: 'Sine Wave',
+					  color: '#ff7f0e'
+					},
+					{
+					  values: cos,
+					  key: 'Cosine Wave',
+					  color: '#2ca02c'
+					}
+				  ];
+				}
+
+			$scope.myData = data();	
+			
+            $scope.chartOptions = {
+                chartType: 'lineChart',
+                data: 'myData',
+                useInteractiveGuideline: true,
+                tooltips: true,
+                showXAxis: true,
+                xAxisLabel: 'Time (ms)',
+                xAxisTickFormat: ',r',
+                showYAxis: true,
+                yAxisLabel: 'Voltage (v)',
+                yAxisTickFormat: '.02f',
+                transitionDuration: 500,
+                plugins: [new nvChartExportPlugin()]
+            }
+        });		
+	</script>	
+</html>
