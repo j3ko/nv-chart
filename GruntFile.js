@@ -40,8 +40,8 @@ module.exports = function (grunt) {
         },
         watch: {
             debug: {
-                files: ['<%= srcFiles %>'],
-                tasks: ['concat:debug', 'jshint']
+                files: ['<%= srcFiles %>', 'src/less/*.less'],
+                tasks: ['less:debug', 'concat:debug', 'jshint']
             }
         },
         jshint: {
@@ -76,7 +76,22 @@ module.exports = function (grunt) {
                 src: ['<%= srcFiles %>'],
                 dest: 'build/<%= pkg.name %>.js'
             }
-        },      
+        },
+        less: {
+            debug: {
+                files: {
+                    "build/nv-chart.css": ['src/less/global.less']
+                }
+            },
+            prod: {
+                options: {
+                    yuicompress: true
+                },
+                files: {
+                    "build/nv-chart.min.css": ['src/less/global.less']
+                }
+            }
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> v<%= pkg.version %> | ' + 
@@ -104,9 +119,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
-
-    grunt.registerTask('test', ['concat:debug', 'karma:ci', 'jshint']);
+    grunt.registerTask('test', ['less:debug', 'concat:debug', 'karma:ci', 'jshint']);
     grunt.registerTask('debug', ['watch:debug']);
-    grunt.registerTask('build', ['concat:prod', 'karma:unit', 'jshint', 'uglify']);
+    grunt.registerTask('build', ['less:prod', 'concat:prod', 'karma:unit', 'jshint', 'uglify']);
 };

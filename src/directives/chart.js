@@ -2,7 +2,9 @@ d3App
 .directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
     var d3Directive = {
         scope: true,
-        link: function($scope, elem, attrs) {
+        controller: 'chartController',
+        template: '<ul style="display:none;" nv-chart-menu></ul>',
+        link: function($scope, elem, attrs, chartCtrl) {
             var scope = $scope.$parent;
             var $element = $(elem);
             var event = new d3Event($scope, $rootScope);
@@ -56,6 +58,16 @@ d3App
                     angular.element($window).off('resize.nv-chart', chart.redraw);
                     event.unbindModel(chart.model);
                 });
+
+                //initialize plugins.
+                angular.forEach(options.plugins, function (p) {
+                    if (typeof p === "function") {
+                        p = new p();
+                    }
+                    p.init($scope.$new(), elem, chart, chartCtrl);
+                    // only allow one plugin of a given type
+                    //options.plugins[$utils.getInstanceType(p)] = p;
+                });
             };
 
             var unbindOptions = function() {
@@ -64,7 +76,6 @@ d3App
                 chart.data = [];
                 chart.render();
             };
-
         }
     };
 

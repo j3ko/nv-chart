@@ -2,7 +2,7 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/10/2014 01:41
+* Compiled At: 05/25/2014 21:14
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -238,7 +238,7 @@ var d3Chart = function($scope, $element, event) {
 
         self.configAxis(model);
 
-        $element.children('svg').remove();
+        $element.find('svg').remove();
 
         var svg = d3.select($element[0])
             .append('svg')
@@ -297,10 +297,27 @@ var d3Event = function($scope, $rootScope) {
 };
 
 d3App
+.controller('chartController', ['$scope', function($scope) {
+    var ctrl = this,
+        menuItems = ctrl.menuItems = [];
+
+    ctrl.addMenuItem = function(_) {
+        menuItems.push(_);
+    };
+    ctrl.removeMenuItem = function(_) {
+        var index = menuItems.indexOf(_);
+        menuItems.splice(index, 1);
+    };
+
+}]);
+
+d3App
 .directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
     var d3Directive = {
         scope: true,
-        link: function($scope, elem, attrs) {
+        controller: 'chartController',
+        template: '<ul style="display:none;" nv-chart-menu></ul>',
+        link: function($scope, elem, attrs, chartCtrl) {
             var scope = $scope.$parent;
             var $element = $(elem);
             var event = new d3Event($scope, $rootScope);
@@ -354,6 +371,16 @@ d3App
                     angular.element($window).off('resize.nv-chart', chart.redraw);
                     event.unbindModel(chart.model);
                 });
+
+                //initialize plugins.
+                angular.forEach(options.plugins, function (p) {
+                    if (typeof p === "function") {
+                        p = new p();
+                    }
+                    p.init($scope.$new(), elem, chart, chartCtrl);
+                    // only allow one plugin of a given type
+                    //options.plugins[$utils.getInstanceType(p)] = p;
+                });
             };
 
             var unbindOptions = function() {
@@ -362,11 +389,70 @@ d3App
                 chart.data = [];
                 chart.render();
             };
-
         }
     };
 
     return d3Directive;
+}]);
+
+d3App
+.directive('nvChartMenu', ['$window', function($window) {
+
+    return {
+        require: '^nvChart',
+        scope: {},
+        template:   '<ul class="nv-chart-menu" >' +
+                        '<li ng-repeat="item in menuItems" ng-click="item.onClick(item)">' +
+                            '<a>{{item.name}}</a>' +
+                        '</li>' +
+                    '</ul>',
+        link: function($scope, elem, attrs, chartCtrl) {
+            var $element = $(elem),
+                menuOpened = false,
+                w = angular.element($window),
+                openTarget;
+
+            $scope.menuItems = chartCtrl.menuItems;
+
+            function closeMenu(element) {
+                element.hide();
+                menuOpened = false;
+            }
+
+            function openMenu(event, element) {
+                element.css('position', 'absolute');
+                element.css('top', Math.max(event.pageY, 0) + 'px');
+                element.css('left', Math.max(event.pageX, 0) + 'px');
+                element.show();
+                menuOpened = true;
+            }
+
+            function onWindowClick(event) {
+                if (menuOpened && (event.button !== 2 || event.target !== openTarget)){
+                   closeMenu($element);
+                }
+            }
+
+            $element.parent().bind('contextmenu', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                openTarget = event.target;
+
+                openMenu(event, $element);
+            });
+
+            w.bind('keyup', function(event) {
+                if (menuOpened && event.keyCode === 27) {
+                    closeMenu($element);
+                }
+            });
+
+            w.bind('click', onWindowClick);
+            w.bind('contextmenu', onWindowClick);
+
+        }
+    };
+
 }]);
 
 }(window, jQuery));

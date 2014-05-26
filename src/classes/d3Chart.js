@@ -207,7 +207,7 @@ var d3Chart = function($scope, $element, event) {
 
         self.configAxis(model);
 
-        $element.children('svg').remove();
+        $element.find('svg').remove();
 
         var svg = d3.select($element[0])
             .append('svg')

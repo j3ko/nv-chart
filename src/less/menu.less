@@ -1,0 +1,57 @@
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+  box-shadow: @shadow;
+}
+
+.nv-chart-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0; // override default ul
+  list-style: none;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ccc; // IE8 fallback
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  .box-shadow(0 6px 12px rgba(0,0,0,.175));
+  background-clip: padding-box;
+
+  // Links within the dropdown menu
+  > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: lighten(#000, 20%);
+    white-space: nowrap; // prevent links from randomly breaking onto new lines
+  }
+}
+
+// Hover/Focus state
+.nv-chart-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: darken(lighten(#000, 20%), 5%);
+    background-color: #f5f5f5;
+    cursor: default;
+  }
+}
+
+// Active state
+.nv-chart-menu > .active > a {
+  &,
+  &:hover,
+  &:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #428bca;
+  }
+}
+
