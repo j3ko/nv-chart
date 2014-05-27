@@ -2,7 +2,7 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/25/2014 23:50
+* Compiled At: 05/26/2014 23:54
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -401,6 +401,7 @@ d3App
     return {
         require: '^nvChart',
         scope: {},
+        replace: true,
         template:   '<ul class="nv-chart-menu" >' +
                         '<li ng-repeat="item in menuItems" ng-click="item.onClick(item)">' +
                             '<a>{{item.name}}</a>' +

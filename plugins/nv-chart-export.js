@@ -33,7 +33,7 @@ function nvChartExportPlugin(opts) {
         // Export Graph to dataURL and download to client
         function ExportToPng(target) {
 
-            var svg = $(target).clone().find('svg').first();
+            var svg = jQuery(target).clone().find('svg').first();
 
             angular.forEach(document.styleSheets, function(css, i) {
                 var rules = document.styleSheets[i].cssRules;

@@ -4,6 +4,7 @@ d3App
     return {
         require: '^nvChart',
         scope: {},
+        replace: true,
         template:   '<ul class="nv-chart-menu" >' +
                         '<li ng-repeat="item in menuItems" ng-click="item.onClick(item)">' +
                             '<a>{{item.name}}</a>' +
