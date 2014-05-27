@@ -2,7 +2,7 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/26/2014 23:54
+* Compiled At: 05/27/2014 00:09
 ***********************************************/
 (function(window, $) {
 'use strict';

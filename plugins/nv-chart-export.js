@@ -17,7 +17,7 @@ function nvChartExportPlugin(opts) {
         self.scope = scope;
 
         var exp = [{
-            name: 'Export to PNG',
+            name: 'Export to png',
             onClick: function(){ ExportToPng(elem) }
         }];
 
