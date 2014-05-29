@@ -1,6 +1,6 @@
-# nv-chart [![Build Status](https://travis-ci.org/j3ko/ng-d3.svg?branch=master)](https://travis-ci.org/j3ko/ng-d3)
+# nv-chart (ng-d3) [![Build Status](https://travis-ci.org/j3ko/ng-d3.svg?branch=master)](https://travis-ci.org/j3ko/ng-d3)
 
-AngularJS D3.js charting using NVD3.js
+AngularJS D3.js charting using NVD3.js 
 
 ## Examples
 
@@ -36,7 +36,7 @@ NVD3.js (http://nvd3.org/)
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
-<script type="text/javascript" src="http://rawgit.com/j3ko/ng-d3/master/build/nv-chart.min.js"></script>
+<script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"></script>
 <script>
     angular.module('myApp',['nvChart']);
 

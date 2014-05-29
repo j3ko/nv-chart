@@ -62,6 +62,10 @@ module.exports = function (grunt) {
                     '\'use strict\';\n',
                 footer: '\n}(window, jQuery));'
             },
+            version: {
+                src: ['<%= srcFiles %>'],
+                dest: '<%= pkg.name %>-<%= pkg.version %>.debug.js'
+            },
             prod: {
                 options: {
                     stripBanners: {
@@ -90,6 +94,19 @@ module.exports = function (grunt) {
                 files: {
                     "build/nv-chart.min.css": ['src/less/global.less']
                 }
+            },
+            version: {
+                files: {
+                    "nv-chart.css": ['src/less/global.less']
+                }
+            },
+            versionmin: {
+                options: {
+                    cleancss: true
+                },
+                files: {
+                    "nv-chart.min.css": ['src/less/global.less']
+                }
             }
         },
         uglify: {
@@ -97,9 +114,13 @@ module.exports = function (grunt) {
                 banner: '/*! <%= pkg.name %> v<%= pkg.version %> | ' + 
                         '<%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
-            build: {
+            prod: {
                 src: 'build/<%= pkg.name %>.js',
                 dest: 'build/<%= pkg.name %>.min.js'
+            },
+            version: {
+                src: '<%= pkg.name %>-<%= pkg.version %>.debug.js',
+                dest: '<%= pkg.name %>-<%= pkg.version %>.min.js'
             }
         },
         jasmine: {
@@ -123,5 +144,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', ['less:debug', 'concat:debug', 'karma:ci', 'jshint']);
     grunt.registerTask('debug', ['watch:debug']);
-    grunt.registerTask('build', ['less:prod', 'concat:prod', 'karma:unit', 'jshint', 'uglify']);
+    grunt.registerTask('build', ['less:prod', 'concat:prod', 'karma:unit', 'jshint', 'uglify:prod']);
+    grunt.registerTask('version', ['less:version', 'less:versionmin', 'concat:version', 'uglify:version']);
+
 };
