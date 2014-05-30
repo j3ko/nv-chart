@@ -10,7 +10,7 @@ function nvChartExportPlugin(opts) {
     self.chart = null;
     self.scope = null;
 
-    self.config = $.extend(defaults, opts);
+    self.config = jQuery.extend(defaults, opts);
 
     self.init = function(scope, elem, chart, ctrl) {
         self.chart = chart;
@@ -46,7 +46,7 @@ function nvChartExportPlugin(opts) {
                 }
             });
 
-            var newCanvas = $('<canvas></canvas>');
+            var newCanvas = jQuery('<canvas></canvas>');
 
             newCanvas[0].width = elem.width();
             newCanvas[0].height = elem.height();

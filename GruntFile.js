@@ -52,6 +52,10 @@ module.exports = function (grunt) {
         },
         concat: {
             options: {
+                stripBanners: {
+                    block: true,
+                    line: true
+                },
                 banner: '/***********************************************\n' +
                     '* nv-chart JavaScript Library\n' +
                     '* Author: Jeffrey Ko\n' +
@@ -67,12 +71,6 @@ module.exports = function (grunt) {
                 dest: '<%= pkg.name %>-<%= pkg.version %>.debug.js'
             },
             prod: {
-                options: {
-                    stripBanners: {
-                        block: true,
-                        line: true
-                    }
-                },
                 src: ['<%= srcFiles %>'],
                 dest: 'build/<%= pkg.name %>.js'
             },
