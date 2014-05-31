@@ -2,10 +2,12 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         srcFiles: [
+            'src/partials/intro.js',
             'src/*.js',
             'src/classes/*.js',
             'src/controllers/*.js',
-            'src/directives/*.js'
+            'src/directives/*.js',
+            'src/partials/outro.js'
         ],
         testFiles: [
             'test/*.js'
@@ -61,10 +63,7 @@ module.exports = function (grunt) {
                     '* Author: Jeffrey Ko\n' +
                     '* License: MIT (http://www.opensource.org/licenses/mit-license.php)\n' +
                     '* Compiled At: <%= grunt.template.today("mm/dd/yyyy HH:MM") %>\n' +
-                    '***********************************************/\n' +
-                    '(function(window, $) {\n' +
-                    '\'use strict\';\n',
-                footer: '\n}(window, jQuery));'
+                    '***********************************************/\n'
             },
             version: {
                 src: ['<%= srcFiles %>'],
