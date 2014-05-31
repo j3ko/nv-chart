@@ -1,4 +1,4 @@
-# nv-chart (ng-d3) [![Build Status](https://travis-ci.org/j3ko/ng-d3.svg?branch=master)](https://travis-ci.org/j3ko/ng-d3)
+# nv-chart (ng-d3) [![Build Status](https://travis-ci.org/j3ko/nv-chart.svg?branch=master)](https://travis-ci.org/j3ko/nv-chart)
 
 AngularJS D3.js charting using NVD3.js 
 
