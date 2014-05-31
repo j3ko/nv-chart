@@ -32,10 +32,10 @@ NVD3.js (http://nvd3.org/)
 **Basic Usage:**
 
 ```html
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="http://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
 <script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"></script>
 <script>
     angular.module('myApp',['nvChart']);
@@ -51,7 +51,8 @@ NVD3.js (http://nvd3.org/)
 		};
 	};
 </script>
-<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" /> 
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
+<link rel="stylesheet" href="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.css" />
 <body ng-app="myApp" ng-controller="MyCtrl">
     <div nv-chart="chartOptions"></div>
 </body>
