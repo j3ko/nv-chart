@@ -89,6 +89,10 @@ header h2 {
   letter-spacing: 0;
 }
 
+header a, header a:hover {
+    color: #fff;
+}
+
 .inner {
   position: relative;
   width: 940px;
@@ -110,7 +114,7 @@ header h2 {
 }
 
 aside#sidebar {
-  width: 200px;
+  width: 240px;
   padding-left: 20px;
   min-height: 504px;
   float: right;
@@ -128,15 +132,16 @@ aside#sidebar p.repo-owner a {
   margin-bottom: 40px;
 }
 
-a.button {
-  width: 134px;
-  height: 58px;
+a.button, a.button:hover {
+  width: 220px;
+  height: 80px;
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
   padding-left: 68px;
   padding-top: 22px;
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  text-decoration: none;
 }
 a.button small {
   display: block;
@@ -148,9 +153,8 @@ header a.button {
   top: 0;
   background: transparent url(../images/github-button.png) 0 0 no-repeat;
 }
-aside a.button {
-  width: 138px;
-  padding-left: 64px;
+aside a.button, aside a.button:hover {
+  width: 220px;
   display: block;
   background: transparent url(../images/download-button.png) 0 0 no-repeat;
   margin-bottom: 20px;
@@ -175,6 +179,7 @@ pre {
   background: #fff;
   text-shadow: none;
   overflow: auto;
+  word-wrap: normal;
   border: solid 1px #f2f2f2;
 }
 pre code {
@@ -211,7 +216,6 @@ th {
 
 td {
   border: 1px solid #ebebeb;
-  text-align: center; 
   font-weight: 300;
 }
 

@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print"/>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
+    <link rel="stylesheet" href="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.css" />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <title>nv-chart</title>
+</head>
 
-    <title>nv-chart by j3ko</title>
-  </head>
-
-  <body>
-    <header>
-      <div class="inner">
+<body>
+<header>
+    <div class="inner">
         <h1>nv-chart</h1>
-        <h2>AngularJS D3.js charting using NVD3.js</h2>
-        <a href="https://github.com/j3ko/nv-chart" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
-<a name="nv-chart-ng-d3-" class="anchor" href="#nv-chart-ng-d3-"><span class="octicon octicon-link"></span></a>nv-chart (ng-d3) <a href="https://travis-ci.org/j3ko/nv-chart"><img src="https://travis-ci.org/j3ko/nv-chart.svg?branch=master" alt="Build Status"></a>
-</h1>
+        <h2><a href="http://angularjs.org/">AngularJS</a> charting using <a href="http://nvd3.org/">NVD3.js</a></h2>
+        <a href="https://github.com/j3ko/nv-chart" class="button">
+            <small>View project on</small>GitHub</a>
+    </div>
+</header>
 
-<p>AngularJS D3.js charting using NVD3.js </p>
-
+<div id="content-wrapper">
+<div class="inner clearfix">
+<section id="main-content">
 <h2>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+    <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <p>Line chart: <a href="http://plnkr.co/edit/mvBrF5?p=preview">http://plnkr.co/edit/mvBrF5?p=preview</a></p>
 
-<p>Line plus bar with focus chart: <a href="http://plnkr.co/edit/juLYmY?p=preview">http://plnkr.co/edit/juLYmY?p=preview</a></p>
+<p>Line plus bar with focus chart: <a
+        href="http://plnkr.co/edit/juLYmY?p=preview">http://plnkr.co/edit/juLYmY?p=preview</a></p>
 
 <h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+    <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting
+    Started</h2>
 
 <p><strong>Dependencies:</strong></p>
 
@@ -50,278 +47,343 @@
 
 <p>jQuery (<a href="http://jquery.com/">http://jquery.com/</a>)</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-2.0.3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span
+        class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-2.0.3.min.js"</span><span
+        class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
 
 <p>D3.js (<a href="http://d3js.org/">http://d3js.org/</a>)</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span
+        class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"</span><span
+        class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
 
 <p>NVD3.js (<a href="http://nvd3.org/">http://nvd3.org/</a>)</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css"</span> <span class="nt">/&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span
+        class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"</span><span
+        class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span
+            class="na">href=</span><span
+            class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css"</span> <span
+            class="nt">/&gt;</span>
+</pre>
+</div>
 
 <p><strong>Basic Usage:</strong></p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-2.0.3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.angularjs.org/1.3.0-beta.5/angular.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span
+        class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-2.0.3.min.js"</span><span
+        class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span
+            class="na">src=</span><span class="s">"http://code.angularjs.org/1.3.0-beta.5/angular.js"</span><span
+            class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span
+            class="na">src=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"</span><span
+            class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span
+            class="na">src=</span><span
+            class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span
+            class="na">src=</span><span
+            class="s">"http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-    <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'myApp'</span><span class="p">,[</span><span class="s1">'nvChart'</span><span class="p">]);</span>
+    <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span
+            class="s1">'myApp'</span><span class="p">,[</span><span class="s1">'nvChart'</span><span
+            class="p">]);</span>
 
-    <span class="kd">function</span> <span class="nx">MyCtrl</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$scope</span><span class="p">.</span><span class="nx">chartData</span> <span class="o">=</span> <span class="p">[{</span>
-            <span class="nx">key</span><span class="o">:</span> <span class="s1">'Series 1'</span><span class="p">,</span>
-            <span class="nx">values</span><span class="o">:</span><span class="p">[{</span><span class="s1">'x'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'y'</span> <span class="o">:</span> <span class="mi">5</span><span class="p">},{</span><span class="s1">'x'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'y'</span> <span class="o">:</span> <span class="mi">10</span><span class="p">},{</span><span class="s1">'x'</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'y'</span> <span class="o">:</span> <span class="mi">15</span><span class="p">}]</span>
+    <span class="kd">function</span> <span class="nx">MyCtrl</span><span class="p">(</span><span
+            class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">chartData</span> <span class="o">=</span> <span
+            class="p">[{</span>
+            <span class="nx">key</span><span class="o">:</span> <span class="s1">'Series 1'</span><span
+            class="p">,</span>
+            <span class="nx">values</span><span class="o">:</span><span class="p">[{</span><span
+            class="s1">'x'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span
+            class="s1">'y'</span> <span class="o">:</span> <span class="mi">5</span><span class="p">},{</span><span
+            class="s1">'x'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span
+            class="s1">'y'</span> <span class="o">:</span> <span class="mi">10</span><span class="p">},{</span><span
+            class="s1">'x'</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span
+            class="s1">'y'</span> <span class="o">:</span> <span class="mi">15</span><span class="p">}]</span>
         <span class="p">}];</span>
-        <span class="nx">$scope</span><span class="p">.</span><span class="nx">chartOptions</span> <span class="o">=</span> <span class="p">{</span> 
-            <span class="nx">chartType</span><span class="o">:</span> <span class="s1">'lineChart'</span><span class="p">,</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">chartOptions</span> <span
+            class="o">=</span> <span class="p">{</span>
+            <span class="nx">chartType</span><span class="o">:</span> <span class="s1">'lineChart'</span><span
+            class="p">,</span>
             <span class="nx">data</span><span class="o">:</span> <span class="s1">'chartData'</span> 
         <span class="p">};</span>
     <span class="p">};</span>
 <span class="nt">&lt;/script&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.css"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">"myApp"</span> <span class="na">ng-controller=</span><span class="s">"MyCtrl"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">nv-chart=</span><span class="s">"chartOptions"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span
+            class="na">href=</span><span
+            class="s">"http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css"</span> <span
+            class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span
+            class="na">href=</span><span
+            class="s">"http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.css"</span> <span
+            class="nt">/&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">"myApp"</span> <span class="na">ng-controller=</span><span
+            class="s">"MyCtrl"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">nv-chart=</span><span class="s">"chartOptions"</span><span
+            class="nt">&gt;&lt;/div&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
-</pre></div>
+</pre>
+</div>
 
 <h2>
-<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+    <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation
+</h2>
 
 <p><strong>General Chart Options:</strong></p>
 
 <table>
-<thead><tr>
-<th>Option</th>
-<th>Description</th>
-<th>Default</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>chartType</td>
-<td>required string. One of any available NVD3 models (ie. "lineChart", "discreteBarChart", "scatterChart", etc.)</td>
-<td>none</td>
-</tr>
-<tr>
-<td>data</td>
-<td>required string. Name of a scope variable containing the data series</td>
-<td>none</td>
-</tr>
-<tr>
-<td>color</td>
-<td>an array of hex color codes ie. <code>["#fff","#000","#333"]</code>
-</td>
-<td>none</td>
-</tr>
-<tr>
-<td>margin</td>
-<td>an object describing the margins of the form: <code>{ top: 10, left: 10, right: 10, bottom: 10 }</code>
-</td>
-<td>none</td>
-</tr>
-<tr>
-<td>showXAxis</td>
-<td>displays the x-axis if true</td>
-<td>true</td>
-</tr>
-<tr>
-<td>xValue</td>
-<td>sets the x-accessor to the specified constant or function of the form <code>function(d, i)</code>
-</td>
-<td>none</td>
-</tr>
-<tr>
-<td>xAxisLabel</td>
-<td>sets the label of the x-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>xAxisTickFormat</td>
-<td>sets the x-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>xShowMaxMin</td>
-<td>display the max/min values on the x-axis</td>
-<td>true</td>
-</tr>
-<tr>
-<td>x2AxisLabel</td>
-<td>sets the label of the x2-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>x2AxisTickFormat</td>
-<td>sets the x2-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>showYAxis</td>
-<td>displays the y-axis if true</td>
-<td>true</td>
-</tr>
-<tr>
-<td>yValue</td>
-<td>sets the y-accessor to the specified constant or function of the form <code>function(d, i)</code>
-</td>
-<td>none</td>
-</tr>
-<tr>
-<td>yAxisLabel</td>
-<td>sets the label of the y-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>yShowMaxMin</td>
-<td>display the max/min values on the y-axis</td>
-<td>true</td>
-</tr>
-<tr>
-<td>yAxisTickFormat</td>
-<td>sets the y-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y1AxisLabel</td>
-<td>sets the label of the y1-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y1AxisTickFormat</td>
-<td>sets the y1-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y2AxisLabel</td>
-<td>sets the label of the y2-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y2AxisTickFormat</td>
-<td>sets the y2-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y3AxisLabel</td>
-<td>sets the label of the y3-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y3AxisTickFormat</td>
-<td>sets the y3-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y4AxisLabel</td>
-<td>sets the label of the y4-axis</td>
-<td>none</td>
-</tr>
-<tr>
-<td>y4AxisTickFormat</td>
-<td>sets the y4-axis tick format to the specified D3 format string or function</td>
-<td>none</td>
-</tr>
-<tr>
-<td>tooltips</td>
-<td>diplays tooltips if true</td>
-<td>true</td>
-</tr>
-<tr>
-<td>showValues</td>
-<td>displays the value in the chart if true</td>
-<td>false</td>
-</tr>
-<tr>
-<td>staggerLabels</td>
-<td>staggers the labels for readability if true</td>
-<td>false</td>
-</tr>
-<tr>
-<td>useInteractiveGuideline</td>
-<td>diplays an interactive guideline on the graph if true</td>
-<td>true</td>
-</tr>
-<tr>
-<td>transitionDuration</td>
-<td>a number indicating the speed of transitions</td>
-<td>0</td>
-</tr>
-</tbody>
-</table><p><strong>Pie Chart Specific Options:</strong></p>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>chartType</td>
+        <td>required string. One of any available NVD3 models (ie. "lineChart", "discreteBarChart", "scatterChart",
+            etc.)
+        </td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>required string. Name of a scope variable containing the data series</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>color</td>
+        <td>an array of hex color codes ie. <code>["#fff","#000","#333"]</code>
+        </td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>margin</td>
+        <td>an object describing the margins of the form: <code>{ top: 10, left: 10, right: 10, bottom: 10 }</code>
+        </td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>showXAxis</td>
+        <td>displays the x-axis if true</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>xValue</td>
+        <td>sets the x-accessor to the specified constant or function of the form <code>function(d, i)</code>
+        </td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>xAxisLabel</td>
+        <td>sets the label of the x-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>xAxisTickFormat</td>
+        <td>sets the x-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>xShowMaxMin</td>
+        <td>display the max/min values on the x-axis</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>x2AxisLabel</td>
+        <td>sets the label of the x2-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>x2AxisTickFormat</td>
+        <td>sets the x2-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>showYAxis</td>
+        <td>displays the y-axis if true</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>yValue</td>
+        <td>sets the y-accessor to the specified constant or function of the form <code>function(d, i)</code>
+        </td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>yAxisLabel</td>
+        <td>sets the label of the y-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>yShowMaxMin</td>
+        <td>display the max/min values on the y-axis</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>yAxisTickFormat</td>
+        <td>sets the y-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y1AxisLabel</td>
+        <td>sets the label of the y1-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y1AxisTickFormat</td>
+        <td>sets the y1-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y2AxisLabel</td>
+        <td>sets the label of the y2-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y2AxisTickFormat</td>
+        <td>sets the y2-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y3AxisLabel</td>
+        <td>sets the label of the y3-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y3AxisTickFormat</td>
+        <td>sets the y3-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y4AxisLabel</td>
+        <td>sets the label of the y4-axis</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>y4AxisTickFormat</td>
+        <td>sets the y4-axis tick format to the specified D3 format string or function</td>
+        <td>none</td>
+    </tr>
+    <tr>
+        <td>tooltips</td>
+        <td>diplays tooltips if true</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>showValues</td>
+        <td>displays the value in the chart if true</td>
+        <td>false</td>
+    </tr>
+    <tr>
+        <td>staggerLabels</td>
+        <td>staggers the labels for readability if true</td>
+        <td>false</td>
+    </tr>
+    <tr>
+        <td>useInteractiveGuideline</td>
+        <td>diplays an interactive guideline on the graph if true</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>transitionDuration</td>
+        <td>a number indicating the speed of transitions</td>
+        <td>0</td>
+    </tr>
+    </tbody>
+</table>
+<br />
+<p><strong>Pie Chart Specific Options:</strong></p>
 
 <table>
-<thead><tr>
-<th>Option</th>
-<th>Description</th>
-<th>Default</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>showLabels</td>
-<td>displays labels if true</td>
-<td>true</td>
-</tr>
-<tr>
-<td>labelThreshold</td>
-<td>configure the minimum slice size for labels to show up</td>
-<td>0.5</td>
-</tr>
-<tr>
-<td>labelType</td>
-<td>configure what type of data to show in the label.  One of: "key", "value" or "percent"</td>
-<td>"key"</td>
-</tr>
-<tr>
-<td>donut</td>
-<td>sets the chart to donut mode</td>
-<td>false</td>
-</tr>
-<tr>
-<td>donutRatio</td>
-<td>configure the size of the donut hole</td>
-<td>0</td>
-</tr>
-</tbody>
-</table><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+    <thead>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>showLabels</td>
+        <td>displays labels if true</td>
+        <td>true</td>
+    </tr>
+    <tr>
+        <td>labelThreshold</td>
+        <td>configure the minimum slice size for labels to show up</td>
+        <td>0.5</td>
+    </tr>
+    <tr>
+        <td>labelType</td>
+        <td>configure what type of data to show in the label. One of: "key", "value" or "percent"</td>
+        <td>"key"</td>
+    </tr>
+    <tr>
+        <td>donut</td>
+        <td>sets the chart to donut mode</td>
+        <td>false</td>
+    </tr>
+    <tr>
+        <td>donutRatio</td>
+        <td>configure the size of the donut hole</td>
+        <td>0</td>
+    </tr>
+    </tbody>
+</table>
+<br />
+<h2>
+    <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>nv-chart.js is freely distributable under the terms of the MIT license.</p>
-        </section>
+</section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/j3ko/nv-chart/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/j3ko/nv-chart/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+<aside id="sidebar">
+    <a href="https://github.com/j3ko/nv-chart/zipball/master" class="button">
+        <small>Download</small>
+        .zip file
+    </a>
+    <a href="https://github.com/j3ko/nv-chart/tarball/master" class="button">
+        <small>Download</small>
+        .tar.gz file
+    </a>
 
-          <p class="repo-owner"><a href="https://github.com/j3ko/nv-chart"></a> is maintained by <a href="https://github.com/j3ko">j3ko</a>.</p>
+    <p class="repo-owner"><a href="https://github.com/j3ko/nv-chart"></a> is maintained by <a
+            href="https://github.com/j3ko">j3ko</a>.</p>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a>
+</aside>
+</div>
+</div>
 
-            <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-48072939-2");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+<script type="application/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  </body>
+    ga('create', 'UA-48072939-2', 'j3ko.github.io');
+    ga('send', 'pageview');
+
+</script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
+<script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"></script>
+
+</body>
 </html>
