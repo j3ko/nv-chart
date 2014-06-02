@@ -2,9 +2,9 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/31/2014 03:40
+* Compiled At: 06/01/2014 23:45
 ***********************************************/
-(function(window, $) {
+(function(window) {
 'use strict';
 var d3App = angular.module('nvChart', []);
 
@@ -27,6 +27,18 @@ if (!Function.prototype.bind) {
 
         return fBound;
     };
+}
+
+function extend(){
+    for(var i=1; i<arguments.length; i++)
+        for(var key in arguments[i])
+            if(arguments[i].hasOwnProperty(key))
+                arguments[0][key] = arguments[i][key];
+    return arguments[0];
+}
+
+function isArray(_) {
+    return _ instanceof Array;
 }
 
 var d3Chart = function($scope, $element, event) {
@@ -114,10 +126,10 @@ var d3Chart = function($scope, $element, event) {
 
     self.model = self.modelFn = null;
 
-    self.config = $.extend(defaults, {});
+    self.config = extend(defaults, {});
 
     self.updateConfig = function (options) {
-        self.config = $.extend(self.config, options);
+        self.config = extend(self.config, options);
 
         if (typeof self.config.data === "object") {
             self.data = self.config.data;
@@ -185,7 +197,7 @@ var d3Chart = function($scope, $element, event) {
 
         if (model.margin && self.config.margin !== null && typeof self.config.margin === 'object')
             model.margin(self.config.margin);
-        if (model.color && $.isArray(self.config.color) && self.config.color.length)
+        if (model.color && isArray(self.config.color) && self.config.color.length)
             model.color(self.config.color);
         if (model.width && typeof self.config.width === 'number')
             model.width(self.config.width);
@@ -319,16 +331,16 @@ d3App
         template: '<ul style="display:none;" nv-chart-menu></ul>',
         link: function($scope, elem, attrs, chartCtrl) {
             var scope = $scope.$parent;
-            var $element = $(elem);
+            var $element = angular.element(elem);
             var event = new d3Event($scope, $rootScope);
             var chart = new d3Chart($scope, $element, event);
             var watches = [];
 
             $scope.getElementDimensions = function () {
-                return { 'h': $element.height(), 'w': $element.width() };
+                return { 'h': $element[0].offsetHeight, 'w': $element[0].offsetWidth };
             };
 
-            angular.element($window).bind('resize.nv-chart', chart.redraw);
+            angular.element($window).bind('resize', chart.redraw);
 
             $scope.$watch(attrs.nvChart, function() {
                 var options = scope.$eval(attrs.nvChart);
@@ -356,7 +368,7 @@ d3App
                 // setup data watcher
                 if (typeof options.data === 'string') {
                     var dataWatcher = function (e) {
-                        chart.data = e ? $.extend([], e) : [];
+                        chart.data = e ? extend([], e) : [];
                         chart.render();
                     };
                     watches.push(scope.$watch(options.data, dataWatcher));
@@ -408,7 +420,7 @@ d3App
                         '</li>' +
                     '</ul>',
         link: function($scope, elem, attrs, chartCtrl) {
-            var $element = $(elem),
+            var $element = angular.element(elem),
                 menuOpened = false,
                 w = angular.element($window),
                 openTarget;
@@ -416,7 +428,7 @@ d3App
             $scope.menuItems = chartCtrl.menuItems;
 
             function closeMenu(element) {
-                element.hide();
+                element.css('display', 'none');
                 menuOpened = false;
             }
 
@@ -424,7 +436,7 @@ d3App
                 element.css('position', 'absolute');
                 element.css('top', Math.max(event.pageY, 0) + 'px');
                 element.css('left', Math.max(event.pageX, 0) + 'px');
-                element.show();
+                element.css('display', 'block');
                 menuOpened = true;
             }
 
@@ -456,4 +468,4 @@ d3App
 
 }]);
 
-}(window, jQuery));
+}(window));

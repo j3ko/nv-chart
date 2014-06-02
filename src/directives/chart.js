@@ -6,16 +6,16 @@ d3App
         template: '<ul style="display:none;" nv-chart-menu></ul>',
         link: function($scope, elem, attrs, chartCtrl) {
             var scope = $scope.$parent;
-            var $element = $(elem);
+            var $element = angular.element(elem);
             var event = new d3Event($scope, $rootScope);
             var chart = new d3Chart($scope, $element, event);
             var watches = [];
 
             $scope.getElementDimensions = function () {
-                return { 'h': $element.height(), 'w': $element.width() };
+                return { 'h': $element[0].offsetHeight, 'w': $element[0].offsetWidth };
             };
 
-            angular.element($window).bind('resize.nv-chart', chart.redraw);
+            angular.element($window).bind('resize', chart.redraw);
 
             $scope.$watch(attrs.nvChart, function() {
                 var options = scope.$eval(attrs.nvChart);
@@ -43,7 +43,7 @@ d3App
                 // setup data watcher
                 if (typeof options.data === 'string') {
                     var dataWatcher = function (e) {
-                        chart.data = e ? $.extend([], e) : [];
+                        chart.data = e ? extend([], e) : [];
                         chart.render();
                     };
                     watches.push(scope.$watch(options.data, dataWatcher));

@@ -83,10 +83,10 @@ var d3Chart = function($scope, $element, event) {
 
     self.model = self.modelFn = null;
 
-    self.config = $.extend(defaults, {});
+    self.config = extend(defaults, {});
 
     self.updateConfig = function (options) {
-        self.config = $.extend(self.config, options);
+        self.config = extend(self.config, options);
 
         if (typeof self.config.data === "object") {
             self.data = self.config.data;
@@ -154,7 +154,7 @@ var d3Chart = function($scope, $element, event) {
 
         if (model.margin && self.config.margin !== null && typeof self.config.margin === 'object')
             model.margin(self.config.margin);
-        if (model.color && $.isArray(self.config.color) && self.config.color.length)
+        if (model.color && isArray(self.config.color) && self.config.color.length)
             model.color(self.config.color);
         if (model.width && typeof self.config.width === 'number')
             model.width(self.config.width);

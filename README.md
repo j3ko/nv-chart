@@ -15,9 +15,9 @@ Line plus bar with focus chart: http://plnkr.co/edit/juLYmY?p=preview
 
 nv-chart requires the following javascript libraries:
 
-jQuery (http://jquery.com/)
+AngularJS (http://angularjs.org/)
 ```html
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 ```
 D3.js (http://d3js.org/)
 ```html
@@ -33,7 +33,7 @@ NVD3.js (http://nvd3.org/)
 
 ```html
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="http://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
 <script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"></script>

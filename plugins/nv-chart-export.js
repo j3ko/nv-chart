@@ -1,5 +1,5 @@
 /**
- * This plugin is experimental
+ * This plugin is experimental, requires jQuery
  * @param opts
  */
 function nvChartExportPlugin(opts) {

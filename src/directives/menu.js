@@ -11,7 +11,7 @@ d3App
                         '</li>' +
                     '</ul>',
         link: function($scope, elem, attrs, chartCtrl) {
-            var $element = $(elem),
+            var $element = angular.element(elem),
                 menuOpened = false,
                 w = angular.element($window),
                 openTarget;
@@ -19,7 +19,7 @@ d3App
             $scope.menuItems = chartCtrl.menuItems;
 
             function closeMenu(element) {
-                element.hide();
+                element.css('display', 'none');
                 menuOpened = false;
             }
 
@@ -27,7 +27,7 @@ d3App
                 element.css('position', 'absolute');
                 element.css('top', Math.max(event.pageY, 0) + 'px');
                 element.css('left', Math.max(event.pageX, 0) + 'px');
-                element.show();
+                element.css('display', 'block');
                 menuOpened = true;
             }
 
