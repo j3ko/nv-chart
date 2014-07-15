@@ -36,13 +36,21 @@ function nvChartExportPlugin(opts) {
             var svg = jQuery(target).clone().find('svg').first();
 
             angular.forEach(document.styleSheets, function(css, i) {
-                var rules = document.styleSheets[i].cssRules;
+                var rules
+
+                try {
+                    rules = document.styleSheets[i].cssRules;
+                }
+                catch (e) { }
+
+                if (rules) {
                 for (var idx = 0, len = rules.length; idx < len; idx++) {
                     if (!isSelectorValid(rules[idx].selectorText)) continue;
 
                     svg.find(rules[idx].selectorText).each(function (i, e) {
                         e.style.cssText += rules[idx].style.cssText;
                     });
+                    }
                 }
             });
 

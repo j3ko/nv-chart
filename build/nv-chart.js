@@ -2,7 +2,7 @@
 * nv-chart JavaScript Library
 * Author: Jeffrey Ko
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 06/02/2014 00:30
+* Compiled At: 07/14/2014 22:37
 ***********************************************/
 (function(window) {
 'use strict';
@@ -324,7 +324,7 @@ d3App
 }]);
 
 d3App
-.directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
+.directive('nvChart', ['$window', '$rootScope', '$timeout', function($window, $rootScope, $timeout) {
     var d3Directive = {
         scope: true,
         controller: 'chartController',
@@ -362,6 +362,9 @@ d3App
                     if (chart.config.chartType === newVal) return;
                     chart.updateConfig(options);
                     chart.render();
+                    $timeout(function () {
+                        chart.redraw();
+                    });
                 };
                 watches.push(scope.$watch(attrs.nvChart + '.chartType', chartTypeWatcher));
 
@@ -370,6 +373,9 @@ d3App
                     var dataWatcher = function (e) {
                         chart.data = e ? extend([], e) : [];
                         chart.render();
+                        $timeout(function () {
+                            chart.redraw();
+                        });
                     };
                     watches.push(scope.$watch(options.data, dataWatcher));
                     watches.push(scope.$watch(options.data + '.length', function() {
@@ -400,6 +406,9 @@ d3App
                 watches = [];
                 chart.data = [];
                 chart.render();
+                $timeout(function () {
+                    chart.redraw();
+                });
             };
         }
     };
@@ -433,10 +442,11 @@ d3App
             }
 
             function openMenu(event, element) {
-                element.css('position', 'absolute');
-                element.css('top', Math.max(event.pageY, 0) + 'px');
-                element.css('left', Math.max(event.pageX, 0) + 'px');
                 element.css('display', 'block');
+                var parentOffset = angular.element(element).offsetParent().offset();
+                element.css('position', 'absolute');
+                element.css('top', Math.max(event.pageY - parentOffset.top, 0) + 'px');
+                element.css('left', Math.max(event.pageX - parentOffset.left, 0) + 'px');
                 menuOpened = true;
             }
 
@@ -448,10 +458,10 @@ d3App
 
             $element.parent().bind('contextmenu', function(event) {
                 event.preventDefault();
-                event.stopPropagation();
                 openTarget = event.target;
 
-                openMenu(event, $element);
+                if ($scope.menuItems && $scope.menuItems.length > 0)
+                    openMenu(event, $element);
             });
 
             w.bind('keyup', function(event) {

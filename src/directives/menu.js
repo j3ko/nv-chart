@@ -24,10 +24,11 @@ d3App
             }
 
             function openMenu(event, element) {
-                element.css('position', 'absolute');
-                element.css('top', Math.max(event.pageY, 0) + 'px');
-                element.css('left', Math.max(event.pageX, 0) + 'px');
                 element.css('display', 'block');
+                var parentOffset = angular.element(element).offsetParent().offset();
+                element.css('position', 'absolute');
+                element.css('top', Math.max(event.pageY - parentOffset.top, 0) + 'px');
+                element.css('left', Math.max(event.pageX - parentOffset.left, 0) + 'px');
                 menuOpened = true;
             }
 
@@ -39,10 +40,10 @@ d3App
 
             $element.parent().bind('contextmenu', function(event) {
                 event.preventDefault();
-                event.stopPropagation();
                 openTarget = event.target;
 
-                openMenu(event, $element);
+                if ($scope.menuItems && $scope.menuItems.length > 0)
+                    openMenu(event, $element);
             });
 
             w.bind('keyup', function(event) {

@@ -1,5 +1,5 @@
 d3App
-.directive('nvChart', ['$window', '$rootScope', function($window, $rootScope) {
+.directive('nvChart', ['$window', '$rootScope', '$timeout', function($window, $rootScope, $timeout) {
     var d3Directive = {
         scope: true,
         controller: 'chartController',
@@ -37,6 +37,9 @@ d3App
                     if (chart.config.chartType === newVal) return;
                     chart.updateConfig(options);
                     chart.render();
+                    $timeout(function () {
+                        chart.redraw();
+                    });
                 };
                 watches.push(scope.$watch(attrs.nvChart + '.chartType', chartTypeWatcher));
 
@@ -45,6 +48,9 @@ d3App
                     var dataWatcher = function (e) {
                         chart.data = e ? extend([], e) : [];
                         chart.render();
+                        $timeout(function () {
+                            chart.redraw();
+                        });
                     };
                     watches.push(scope.$watch(options.data, dataWatcher));
                     watches.push(scope.$watch(options.data + '.length', function() {
@@ -75,6 +81,9 @@ d3App
                 watches = [];
                 chart.data = [];
                 chart.render();
+                $timeout(function () {
+                    chart.redraw();
+                });
             };
         }
     };
