@@ -1,31 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="nvApp">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/prettify.css" media="screen"/>
+    <link rel="stylesheet" type='text/css' href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Architects+Daughter'>
     <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" media="screen"/>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
-    <link rel="stylesheet" href="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.css" />
+    <link rel="stylesheet" type='text/css' href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
+    <link rel="stylesheet" type='text/css' href="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.css" />
+    <!--<link rel="stylesheet" type="text/css" href="stylesheets/nv-chart.css" media="screen"/>-->
+    <!--[if lte IE 8]>
+    <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+    </script>
+    <![endif]-->
     <title>nv-chart</title>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+<body ng-controller="nvCtrl" ng-cloak class="ng-cloak">
+<header id="top">
+    <nav class="navbar navbar-default navbar-static-top affix" role="navigation">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Getting Started</a></li>
+                <li><a scrollto href="#top">Home</a></li>
+                <li><a scrollto href="#getting-started">Getting Started</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Menu1</a></li>
-                        <li><a href="#">Menu2</a></li>
-                        <li><a href="#">Menu2</a></li>
-                        <li><a href="#">Menu2</a></li>
+                        <li><a scrollto href="#basic-example">Basic</a></li>
                     </ul>
                 </li>
             </ul>
@@ -51,19 +61,231 @@
 </header>
 <section id="main-content">
     <div class="container">
-        <h2>Getting Started</h2>
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 id="getting-started">Getting Started</h1>
+                <h3>Dependencies</h3>
+                <p>nv-chart requires the following to be installed:</p>
+                <ul>
+                    <li>AngularJS</li>
+                    <li>D3.js</li>
+                    <li>NVD3.js</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Examples</h1>
+            </div>
+            <div class="col-xs-12">
+                <h3 id="basic-example">Basic Example</h3>
+            </div>
+
+            <div class="col-xs-6">
+            <h4>HTML:</h4>
+            <pre class="prettyprint linenums">
+&lt;html ng-app="myApp"&gt;
+    &lt;head&gt;
+        &lt;script type="text/javascript" src="angular.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="d3.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="nv.d3.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="nv-chart.js"&gt;&lt;/script&gt;
+        &lt;link rel="stylesheet" type="text/css" href="nv.d3.css" /&gt;
+        &lt;link rel="stylesheet" type="text/css" href="nv-chart.css" /&gt;
+    &lt;/head&gt;
+
+    &lt;body ng-controller="MyCtrl"&gt;
+        &lt;div class="chartStyle" nv-chart="chartOptions"&gt;&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+
+            </pre>
+            </div>
+            <div class="col-xs-6">
+                <h4>HTML breakdown:</h4>
+                <ol class="breakdown">
+                    <li>Add a reference to AngularJS: <br />
+                        <pre class="prettyprint">&lt;script type="text/javascript" src="angular.js"&gt;&lt;/script&gt;</pre>
+                    </li>
+                    <li>Add a reference to D3.js: <br />
+                        <pre class="prettyprint">&lt;script type="text/javascript" src="d3.js"&gt;&lt;/script&gt;</pre>
+                    </li>
+                    <li>Add a reference to NVD3.js script and css: <br />
+                        <pre class="prettyprint">&lt;script type="text/javascript" src="nv.d3.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="nv.d3.css" /&gt;</pre>
+                    </li>
+                    <li>Add a reference to nv-chart script and css (css is currently optional): <br />
+                        <pre class="prettyprint">&lt;script type="text/javascript" src="nv-chart.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="nv-chart.css" /&gt;</pre>
+                    </li>
+                    <li>Define your AngularJS app: <br />
+                        <pre class="prettyprint">&lt;html ng-app="myApp"&gt;</pre>
+                    </li>
+                    <li>Define the AngularJS controller you will be using on the page: <br />
+                        <pre class="prettyprint">&lt;body ng-controller="MyCtrl"&gt;</pre>
+                    </li>
+                    <li>Add the following to the page where you would like your chart to be.  <code>chartOptions</code> is a scope variable that will be defined in the AngularJS controller: <br />
+                        <pre class="prettyprint">&lt;div class="chartStyle" nv-chart="chartOptions"&gt;&lt;/div&gt;</pre>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="col-xs-6">
+                <h4>Javascript:</h4>
+                <pre class="prettyprint linenums">
+angular.module('myApp',['nvChart']);
+
+function MyCtrl($scope) {
+    $scope.chartOptions = {
+        chartType: 'lineChart',
+        data: 'chartData'
+    };
+    $scope.chartData = [{
+        key: 'Series 1',
+        values:[
+            {'x': 1, 'y' : 5},
+            {'x': 2, 'y' : 10},
+            {'x': 3, 'y' : 15}
+        ]
+    }];
+};
+            </pre>
+            </div>
+            <div class="col-xs-6">
+                <h4>Javascript breakdown:</h4>
+                <ol class="breakdown">
+                    <li>Initialize your AngularJS app and include nv-chart as a dependency: <br />
+                        <pre class="prettyprint">angular.module('myApp',['nvChart']);</pre>
+                    </li>
+                    <li>In your AngularJS controller, define a scope variable with your chart data: <br />
+                        <pre class="prettyprint">$scope.chartData = [{
+    key: 'Series 1',
+    values:[
+        {'x': 1, 'y' : 5},
+        {'x': 2, 'y' : 10},
+        {'x': 3, 'y' : 15}
+    ]
+}];</pre>
+                    </li>
+                    <li>In your AngularJS controller, define a scope variable with your nv-chart options.  At a minimum, the <code>chartType</code> and the <code>chartData</code> options must be set: <br />
+                        <pre class="prettyprint">$scope.chartOptions = {
+    chartType: 'lineChart',
+    data: 'chartData'
+};</pre>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-xs-12">
+                <h4>Result:</h4>
+                <div class="chartStyle" nv-chart="chartOptions"></div>
+            </div>
+
+
+        </div>
+
+        <!--<div class="row">-->
+            <!--<div class="col-xs-12">-->
+                <!--<h3>Multiple Series</h3>-->
+            <!--</div>-->
+            <!--<div class="col-xs-6">-->
+                <!--<tabset justified="true">-->
+                    <!--<tab heading="HTML">-->
+                        <!--<pre class="prettyprint linenums">-->
+<!--&lt;html ng-app="myApp"&gt;-->
+    <!--&lt;head&gt;-->
+        <!--&lt;script type="text/javascript" src="angular.js"&gt;&lt;/script&gt;-->
+        <!--&lt;script type="text/javascript" src="d3.js"&gt;&lt;/script&gt;-->
+        <!--&lt;script type="text/javascript" src="nv.d3.js"&gt;&lt;/script&gt;-->
+        <!--&lt;script type="text/javascript" src="nv-chart.js"&gt;&lt;/script&gt;-->
+        <!--&lt;link rel="stylesheet" type="text/css" href="nv.d3.css" /&gt;-->
+        <!--&lt;link rel="stylesheet" type="text/css" href="nv-chart.css" /&gt;-->
+    <!--&lt;/head&gt;-->
+
+    <!--&lt;body ng-controller="MyCtrl"&gt;-->
+        <!--&lt;div class="chartStyle" nv-chart="chartOptions"&gt;&lt;/div&gt;-->
+    <!--&lt;/body&gt;-->
+<!--&lt;/html&gt;-->
+
+
+                    <!--</pre>-->
+                 <!--</tab>-->
+                 <!--<tab heading="Javascript">-->
+                    <!--<pre class="prettyprint linenums">-->
+<!--angular.module('myApp',['nvChart']);-->
+
+<!--function MyCtrl($scope) {-->
+    <!--$scope.chartOptions = {-->
+        <!--chartType: 'lineChart',-->
+        <!--data: 'chartData'-->
+    <!--};-->
+    <!--$scope.chartData = [{-->
+        <!--key: 'Series 1',-->
+        <!--values:[-->
+            <!--{'x': 1, 'y' : 5},-->
+            <!--{'x': 2, 'y' : 10},-->
+            <!--{'x': 3, 'y' : 15}-->
+        <!--]-->
+    <!--}];-->
+<!--};-->
+                    <!--</pre>-->
+                <!--</tab>-->
+                <!--<tab heading="CSS">-->
+                    <!--<pre class="prettyprint linenums lang-css">-->
+<!--.chartStyle {-->
+    <!--height: 400px;-->
+<!--}-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!--</pre>-->
+                <!--</tab>-->
+            <!--</tabset>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6">-->
+            <!--<div class="chartStyle" nv-chart="chartOptions"></div>-->
+        <!--</div>-->
+
+        <!--</div>-->
     </div>
 </section>
 
 </body>
+<script type="application/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-48072939-2', 'j3ko.github.io');
+    ga('send', 'pageview');
+
+</script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.1/json3.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="javascripts/prettify.js"></script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
-<script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.min.js"></script>
+<script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.js"></script>
+<!--<script type="text/javascript" src="javascripts/nv-chart.js"></script>-->
+<script type="text/javascript" src="javascripts/main.js"></script>
+
 </html>

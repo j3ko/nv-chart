@@ -1,10 +1,27 @@
+.chartStyle {
+    height: 400px;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+ol.breakdown li {
+    margin-bottom: 10px;
+}
+pre.prettyprint {
+    border-radius: 0px;
+    margin-top: -1px;
+}
 .navbar {
     margin-bottom: 0;
+    color: #2D77CC;
 }
-.container {
-    width: 940px !important;
-    min-width: 940px !important;
-    max-width: 940px !important;
+.navbar.affix {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.bs-docs-nav .navbar-brand, .bs-docs-nav .navbar-nav>li>a {
+    color: #2D77CC;
 }
 a.button, a.button:hover {
     width: 220px;
@@ -20,10 +37,12 @@ a.button, a.button:hover {
 
 /* header */
 .jumbotron {
+    margin-top: 51px;
     margin-bottom: 0;
     width: 100%;
     font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
     background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
+    padding: 30px 0px !important;
 }
 .jumbotron h1 {
     letter-spacing: -1px;
@@ -90,87 +109,3 @@ a.button, a.button:hover {
 }
 
 /* main content*/
-#main-content{
-    padding: 30px;
-}
-#main-content h1 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 2.8em;
-    letter-spacing: -1px;
-    color: #474747;
-}
-
-#main-content h1:before {
-    content: "/";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -0.9em;
-}
-
-#main-content h2 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #474747;
-}
-#main-content h2:before {
-    content: "//";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -1.5em;
-}
-
-#main-content h3 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    color: #474747;
-}
-
-#main-content h3:before {
-    content: "///";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -2em;
-}
-
-#main-content h4 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 15px;
-    font-weight: bold;
-    color: #474747;
-}
-
-h4:before {
-    content: "////";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -2.8em;
-}
-
-#main-content h5 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 14px;
-    color: #474747;
-}
-h5:before {
-    content: "/////";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -3.2em;
-}
-
-#main-content h6 {
-    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: .8em;
-    color: #474747;
-}
-h6:before {
-    content: "//////";
-    color: #9ddcff;
-    padding-right: 0.3em;
-    margin-left: -3.7em;
-}
