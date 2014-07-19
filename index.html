@@ -4,12 +4,12 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/prettify.css" media="screen"/>
     <link rel="stylesheet" type='text/css' href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Architects+Daughter'>
+    <link rel='stylesheet' type='text/css' href="//fonts.googleapis.com/css?family=Architects+Daughter">
+    <link rel="stylesheet" type='text/css' href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/prettify.css" media="screen"/>
+    <link rel="stylesheet" type='text/css' href="stylesheets/nv-chart.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" media="screen"/>
-    <link rel="stylesheet" type='text/css' href="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.css" />
-    <link rel="stylesheet" type='text/css' href="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.css" />
     <!--<link rel="stylesheet" type="text/css" href="stylesheets/nv-chart.css" media="screen"/>-->
     <!--[if lte IE 8]>
     <script>
@@ -23,7 +23,7 @@
         document.createElement('ng:view');
     </script>
     <![endif]-->
-    <title>nv-chart</title>
+    <title>Angular charting directive for NVD3</title>
 </head>
 <body ng-controller="nvCtrl" ng-cloak class="ng-cloak">
 <header id="top">
@@ -38,6 +38,7 @@
                         <li><a scrollto href="#basic-example">Basic</a></li>
                     </ul>
                 </li>
+                <li><a scrollto href="#api">API</a></li>
             </ul>
         </div>
     </nav>
@@ -67,9 +68,9 @@
                 <h3>Dependencies</h3>
                 <p>nv-chart requires the following to be installed:</p>
                 <ul>
-                    <li>AngularJS</li>
-                    <li>D3.js</li>
-                    <li>NVD3.js</li>
+                    <li><a href="http://angularjs.org/">AngularJS</a></li>
+                    <li><a href="http://d3js.org/">D3.js</a></li>
+                    <li><a href="http://nvd3.org/">NVD3.js</a></li>
                 </ul>
             </div>
         </div>
@@ -259,6 +260,235 @@ function MyCtrl($scope) {
         <!--</div>-->
 
         <!--</div>-->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 id="api">API Documentation</h1>
+            </div>
+
+            <div class="col-xs-12">
+                <h3>General Chart Options</h3>
+                <ul>
+                    <li>
+                        <p>
+                            <code>chartType</code> <i class="glyphicon glyphicon-eye-open"></i>:
+                            One of <code>"bulletChart"</code>, <code>"cumulativeLineChart"</code>, <code>"discreteBarChart"</code>, <code>"historicalBarChart"</code>, <code>"lineChart"</code>, <code>"linePlusBarChart"</code>, <code>"linePlusBarWithFocusChart"</code>, <code>"lineWithFisheyeChart"</code>, <code>"lineWithFocusChart"</code>, <code>"multiBarChart"</code>, <code>"multiBarHorizontalChart"</code>, <code>"multiBarTimeSeriesChart"</code>, <code>"pieChart"</code>, <code>"scatterChart"</code>, <code>"scatterPlusLineChart"</code>, <code>"sparkline"</code>, <code>"stackedAreaChart"</code>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>data</code> <i class="glyphicon glyphicon-eye-open"></i>:
+                            Can either be a string of a scope variable name or an array containing the data to be charted.  Because of performance concerns, nv-chart only watches strings for scope reference changes
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>color</code>:
+                            An array of D3 accepted color values <code>["#ffeeaa", "#f9f", "red"]</code> used to color the different data sets
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>margin</code>:
+                            An object of the form <code>{ top: 10, bottom: 10, left: 10, right:10 }</code>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>color</code>:
+                            An array of D3 accepted color values <code>["#ffeeaa", "#f9f", "red"]</code> used to color the different data sets
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>tooltips</code> (Default: true):
+                            Displays tooltips if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>showValues</code> (Default: false):
+                            Displays the values in the chart if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>staggerLabels</code> (Default: false):
+                            Staggers the x-axis labels for readability if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>useInteractiveGuideline</code> (Default: true):
+                            Displays an interactive guideline on the graph if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>transitionDuration</code> (Default: 0):
+                            A number indicating the speed of transitions
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>showXAxis</code> (Default: true):
+                            Displays the x-axis if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>xValue</code>:
+                            Sets the x-accessor to the specified constant or function of the form <code>function(d, i) { }</code>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>xAxisLabel</code>:
+                            Sets the label of the x-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>xAxisTickFormat</code>:
+                            Sets the x-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>xShowMaxMin</code> (Default: true):
+                            Display the max/min values on the x-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>x2AxisLabel</code>:
+                            Sets the label of the x2-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>x2AxisTickFormat</code>:
+                            Sets the x2-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>showYAxis</code> (Default: true):
+                            Displays the y-axis if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>yValue</code>:
+                            Sets the y-accessor to the specified constant or function of the form <code>function(d, i) { }</code>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>yAxisLabel</code>:
+                            Sets the label of the y-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>yAxisTickFormat</code>:
+                            Sets the y-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>yShowMaxMin</code> (Default: true):
+                            Display the max/min values on the y-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y1AxisLabel</code>:
+                            Sets the label of the y1-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y1AxisTickFormat</code>:
+                            Sets the y1-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y2AxisLabel</code>:
+                            Sets the label of the y2-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y2AxisTickFormat</code>:
+                            Sets the y2-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y3AxisLabel</code>:
+                            Sets the label of the y3-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y3AxisTickFormat</code>:
+                            Sets the y3-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y4AxisLabel</code>:
+                            Sets the label of the y4-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>y4AxisTickFormat</code>:
+                            Sets the y4-axis tick format to the specified D3 format string or function
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-xs-12">
+                <h3>Pie Chart Specific Options</h3>
+                <ul>
+                    <li>
+                        <p>
+                            <code>showLabels</code> (Default: true):
+                            Displays labels if true
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>labelThreshold</code> (Default: 0.5):
+                            Configure the minimum slice size for labels to show up
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>labelType</code> (Default: key):
+                            Configure what type of data to show in the label. One of: <code>"key"</code>, <code>"value"</code> or <code>"percent"</code>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>donut</code> (Default: false):
+                            Sets the chart to donut mode
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>donutRatio</code> (Default: 0):
+                            Configure the size of the donut hole
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+        </div> <!--row-->
     </div>
 </section>
 
@@ -276,16 +506,14 @@ function MyCtrl($scope) {
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.1/json3.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
+<script type="text/javascript" src="nv-chart-0.1.1.min.js"></script>
 <script type="text/javascript" src="javascripts/prettify.js"></script>
-<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.14-beta/nv.d3.js"></script>
-<script type="text/javascript" src="http://rawgit.com/j3ko/nv-chart/master/build/nv-chart.js"></script>
-<!--<script type="text/javascript" src="javascripts/nv-chart.js"></script>-->
 <script type="text/javascript" src="javascripts/main.js"></script>
 
 </html>

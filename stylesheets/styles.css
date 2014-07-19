@@ -7,6 +7,26 @@
 ol.breakdown li {
     margin-bottom: 10px;
 }
+code {
+    font-family: Consolas, 'Liberation Mono', Courier, monospace;
+    color: #333;
+    background: #f8f8f8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #eaeaea;
+    margin: 0 2px;
+    padding: 0 5px;
+    font-size: 12px;
+}
+pre code {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
 pre.prettyprint {
     border-radius: 0px;
     margin-top: -1px;
