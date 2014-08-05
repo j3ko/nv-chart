@@ -1,5 +1,11 @@
+/* chart styles */
 .chartStyle {
     height: 400px;
+}
+
+/* main content*/
+body {
+    margin-bottom: 50px;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
@@ -127,5 +133,3 @@ a.button, a.button:hover {
 .tar_download_link:hover {
     background: url(../images/sprite_download.png) no-repeat top right;
 }
-
-/* main content*/

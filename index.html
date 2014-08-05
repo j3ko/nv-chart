@@ -36,6 +36,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a scrollto href="#basic-example">Basic</a></li>
+                        <li><a scrollto href="#multiple-series-example">Multiple Series</a></li>
                     </ul>
                 </li>
                 <li><a scrollto href="#api">API</a></li>
@@ -187,57 +188,39 @@ function MyCtrl($scope) {
 
         </div>
 
-        <!--<div class="row">-->
-            <!--<div class="col-xs-12">-->
-                <!--<h3>Multiple Series</h3>-->
-            <!--</div>-->
-            <!--<div class="col-xs-6">-->
-                <!--<tabset justified="true">-->
-                    <!--<tab heading="HTML">-->
-                        <!--<pre class="prettyprint linenums">-->
-<!--&lt;html ng-app="myApp"&gt;-->
-    <!--&lt;head&gt;-->
-        <!--&lt;script type="text/javascript" src="angular.js"&gt;&lt;/script&gt;-->
-        <!--&lt;script type="text/javascript" src="d3.js"&gt;&lt;/script&gt;-->
-        <!--&lt;script type="text/javascript" src="nv.d3.js"&gt;&lt;/script&gt;-->
-        <!--&lt;script type="text/javascript" src="nv-chart.js"&gt;&lt;/script&gt;-->
-        <!--&lt;link rel="stylesheet" type="text/css" href="nv.d3.css" /&gt;-->
-        <!--&lt;link rel="stylesheet" type="text/css" href="nv-chart.css" /&gt;-->
-    <!--&lt;/head&gt;-->
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 id="multiple-series-example">Multiple Series</h3>
+            </div>
+            <div class="col-xs-6">
+                <h4>HTML:</h4>
+                <pre class="prettyprint linenums">
+&lt;html ng-app="myApp"&gt;
+    &lt;head&gt;
+        &lt;script type="text/javascript" src="angular.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="d3.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="nv.d3.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="nv-chart.js"&gt;&lt;/script&gt;
+        &lt;link rel="stylesheet" type="text/css" href="nv.d3.css" /&gt;
+        &lt;link rel="stylesheet" type="text/css" href="nv-chart.css" /&gt;
+    &lt;/head&gt;
 
-    <!--&lt;body ng-controller="MyCtrl"&gt;-->
-        <!--&lt;div class="chartStyle" nv-chart="chartOptions"&gt;&lt;/div&gt;-->
-    <!--&lt;/body&gt;-->
-<!--&lt;/html&gt;-->
-
-
-                    <!--</pre>-->
-                 <!--</tab>-->
-                 <!--<tab heading="Javascript">-->
-                    <!--<pre class="prettyprint linenums">-->
-<!--angular.module('myApp',['nvChart']);-->
-
-<!--function MyCtrl($scope) {-->
-    <!--$scope.chartOptions = {-->
-        <!--chartType: 'lineChart',-->
-        <!--data: 'chartData'-->
-    <!--};-->
-    <!--$scope.chartData = [{-->
-        <!--key: 'Series 1',-->
-        <!--values:[-->
-            <!--{'x': 1, 'y' : 5},-->
-            <!--{'x': 2, 'y' : 10},-->
-            <!--{'x': 3, 'y' : 15}-->
-        <!--]-->
-    <!--}];-->
-<!--};-->
-                    <!--</pre>-->
-                <!--</tab>-->
-                <!--<tab heading="CSS">-->
-                    <!--<pre class="prettyprint linenums lang-css">-->
-<!--.chartStyle {-->
-    <!--height: 400px;-->
-<!--}-->
+    &lt;body ng-controller="MyCtrl"&gt;
+        &lt;div class="chartStyle" nv-chart="chartOptions"&gt;&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                </pre>
+            </div>
+            <div class="col-xs-6">
+                <h4>Scope variables:</h4>
+<tabset>
+    <tab heading="Chart options">
+        <pre class="prettyprint linenums">
+$scope.chartOptions = {
+    chartType: 'multiBarChart',
+    data: 'chartDataOne',
+    margin: { top: 0, bottom: 20, left: 40, right: 10 },
+};
 
 
 
@@ -246,28 +229,94 @@ function MyCtrl($scope) {
 
 
 
+        </pre>
+    </tab>
+    <tab heading="Chart Data">
+        <pre class="prettyprint linenums">
+$scope.chartData = function() {
+    var sin = [], cos = [];
 
+    for (var i = 0; i < 100; i++) {
+        sin.push({ x: i, y: Math.sin(i / 10) });
+        cos.push({ x: i, y: .5 * Math.cos(i / 10) });
+    }
 
-
-
-
-                    <!--</pre>-->
-                <!--</tab>-->
-            <!--</tabset>-->
-        <!--</div>-->
-        <!--<div class="col-xs-6">-->
-            <!--<div class="chartStyle" nv-chart="chartOptions"></div>-->
-        <!--</div>-->
-
-        <!--</div>-->
+    return [
+        { values: sin, key: 'Sine Wave' },
+        { values: cos, key: 'Cosine Wave' }
+    ];
+}();
+        </pre>
+    </tab>
+</tabset>
+            </div>
+            <div class="col-xs-12">
+                <h4>Result:</h4>
+                <div class="chartStyle" nv-chart="chartOptionsOne"></div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12">
                 <h1 id="api">API Documentation</h1>
+                <p>Options passed to nv-chart are logically mapped to NVD3 options.</p>
+            </div>
+            <div class="col-xs-6">
+                <h3>Chart options structure:</h3>
+                <p></p>
+                <pre class="prettyprint">
+var chartOptions = {
+    // required options
+    chartType: null,
+    data: [],
+
+    // general chart properties
+    color: [],
+    margin: {},
+    tooltips: true,
+
+    // x-axis
+    xValue: null,
+    xAxisLabel: null,
+    xAxisTickFormat: null,
+
+    // y-axis
+    yValue: null,
+    yAxisLabel: null,
+    yAxisTickFormat: null,
+}
+                </pre>
+            </div>
+            <div class="col-xs-6">
+                <h3>Chart data structure:</h3>
+                <p></p>
+                <pre class="prettyprint">
+var chartData = {
+    // required options
+    chartType: null,
+    data: [],
+
+    // general chart properties
+    color: [],
+    margin: {},
+    tooltips: true,
+
+    // x-axis
+    xValue: null,
+    xAxisLabel: null,
+    xAxisTickFormat: null,
+
+    // y-axis
+    yValue: null,
+    yAxisLabel: null,
+    yAxisTickFormat: null,
+}
+                </pre>
             </div>
 
             <div class="col-xs-12">
-                <h3>General Chart Options</h3>
+                <h1>Chart Options</h1>
+                <h3>General</h3>
                 <ul>
                     <li>
                         <p>
@@ -442,7 +491,7 @@ function MyCtrl($scope) {
                             <code>y4AxisLabel</code>:
                             Sets the label of the y4-axis
                         </p>
-                    </li>
+                    </li>41
                     <li>
                         <p>
                             <code>y4AxisTickFormat</code>:
@@ -488,6 +537,30 @@ function MyCtrl($scope) {
 
                 </ul>
             </div>
+
+            <div class="col-xs-12">
+                <h3>Scatter Chart Specific Options</h3>
+                <ul>
+                    <li>
+                        <p>
+                            <code>showDistX</code> (Default: false):
+                            Show distribution of values on x-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>showDistY</code> (Default: false):
+                            Show distribution of values on y-axis
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <code>onlyCircles</code> (Default: false):
+                            All points are plotted as circles
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </div> <!--row-->
     </div>
 </section>
@@ -506,7 +579,7 @@ function MyCtrl($scope) {
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
